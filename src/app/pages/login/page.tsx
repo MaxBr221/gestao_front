@@ -1,6 +1,7 @@
-import { useAuth } from "@/app/components/hooks/userAuth";
+import { useAuth } from "@/app/hooks/userAuth";
 
 export default function LoginPage() {
     const auth = useAuth();
+    
 
 }
