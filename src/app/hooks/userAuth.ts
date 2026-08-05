@@ -1,4 +1,4 @@
-import { propAuthentication } from "@/app/resources/axios.ts/authService";
+import { propAuthentication } from "../resources/axios.ts/authService";
 
 export function userAuth() {
 
