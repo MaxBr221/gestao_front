@@ -1,6 +1,7 @@
 'use client'
 import { propAuth } from "../resources/proprietario/proprietario.auth";
 import { Template } from "../components/Template";
+import { Button } from "../components/Button";
 import { InputText } from "../components/InputText";
 import { LoginForm, validationScheme } from "../resources/axios.ts/formScheme";
 import { userAuth } from "../hooks/userAuth";
@@ -45,16 +46,16 @@ export default function LoginPage() {
 
     return(
         <Template>
-            <div>
-                <div className ="py-3">
-                    <h2  className ="font-bold text-xl text-[#1A5F7A]">
+            <div className="w-full max-w-md mx-auto px-5 py-6 text-gray-800">
+                <div className ="flex justify-center">
+                    <h2  className ="font-bold text-xl text-[#1A5F7A] py-4">
                         Faça Login com sua Conta
                     </h2>
                 </div>
-                <div>
-                    <form>
+                <div className="py-8">
+                    <form className="flex flex-col items-center w-full">
                         <label>Login</label>
-                        <div>
+                        <div className="py-3">
                              <InputText
                                 id="login"
                                 name="login"
@@ -64,7 +65,7 @@ export default function LoginPage() {
                                 />
                         </div>
                         <label>Senha</label>
-                        <div>
+                        <div className="py-3">
                             <InputText
                                 id="senha"
                                 name="senha"
@@ -72,14 +73,19 @@ export default function LoginPage() {
                                 onChange={handleChange}
                                 placeholder="Digite sua Senha"/>
                         </div>
-                    
+                       <div> 
+                            <Button 
+                                type="submit" 
+                                style="bg-[#C05C32] hover:bg-[#A84A24] text-white mt-3 px-10 mx-auto block" 
+                                label="Login"
+                            /> 
+                        </div>
                     </form>
                 </div>
             </div>
 
         </Template>
     )
-    
 
 }
 

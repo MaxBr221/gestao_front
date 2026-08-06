@@ -14,7 +14,7 @@ export const InputText: React.FC<InputTextProps> = ({
         <input
             type={type} 
             {...props} 
-            className={`border px-3 py-2 rounded-lg text-gray-900 ${className || ''}`} 
+            className={`border px-10 py-2 rounded-lg text-gray-900 ${className || ''}`} 
         />
     );
 };

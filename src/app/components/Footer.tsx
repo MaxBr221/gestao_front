@@ -1,9 +1,8 @@
 export const Footer: React.FC = () =>{
     return(
-        <footer>
-            <div className="">
-                <p>Gestão Financeiro</p>
-                <p className="text-[10px] mt-1 opacity-70">@gestao_api - Todos os direitos reservados</p>
+        <footer className="w-full flex items-center justify-center bg-[#1A5F7A] text-white shadow-lg border-b border-white/10 relative z-50 ">
+            <div className="font-bold mt-2 py-4">
+                <p>@gestao_inteligente - Todos os direitos reservados</p>
             </div>
         </footer>
     )
