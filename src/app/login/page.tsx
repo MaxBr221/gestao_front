@@ -69,11 +69,12 @@ export default function LoginPage() {
                             <InputText
                                 id="senha"
                                 name="senha"
+                                type="password"
                                 value={values.senha}
                                 onChange={handleChange}
                                 placeholder="Digite sua Senha"/>
                         </div>
-                       <div> 
+                        <div> 
                             <Button 
                                 type="submit" 
                                 style="bg-[#C05C32] hover:bg-[#A84A24] text-white mt-3 px-10 mx-auto block" 
