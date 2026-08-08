@@ -20,13 +20,14 @@ export default function LoginPage() {
             login: '',
             senha: ''
         },
-        validationSchema: validationScheme,
         onSubmit: onSubmit
     });
 
 
 
     async function onSubmit(form: LoginForm) {
+        console.log("1. onSubmit executado");
+        console.log("Dados:", form);
          try {
           const acesso: ProprietarioSessaoToken = await auth.login(form.login, form.senha)
           if(!acesso){
@@ -53,7 +54,9 @@ export default function LoginPage() {
                     </h2>
                 </div>
                 <div className="py-8">
-                    <form className="flex flex-col items-center w-full">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col items-center w-full">
                         <label>Login</label>
                         <div className="py-3">
                              <InputText
