@@ -3,20 +3,20 @@ export async function buscarRelatorioDiario() {
 
     const response = await api.get("/relatorio/diario");
 
-    return response;
+    return response.data;
     
 }
 export async function buscarRelatorioMensal() {
 
-    const response = await api.get("/relatorio/Mensal");
+    const response = await api.get("/relatorio/mensal");
 
-    return response;
+    return response.data;
     
 }
 export async function buscarRelatorioAnual() {
 
     const response = await api.get("/relatorio/anual");
 
-    return response;
+    return response.data;
     
 }
