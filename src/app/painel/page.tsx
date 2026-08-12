@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 export default function PainelPage() {
 
     const router = useRouter();
-
+    //mais a frente colocar dashboard de fato
     return (
         <Template>
 
@@ -26,7 +26,7 @@ export default function PainelPage() {
 
                     {/* DIÁRIO */}
                     <button
-                        onClick={() => router.push("/relatorios/diario")}
+                        onClick={() => router.push("/painel/relatorios/diario")}
                         className="
                             bg-white
                             rounded-2xl
@@ -62,7 +62,7 @@ export default function PainelPage() {
 
                     {/* MENSAL */}
                     <button
-                        onClick={() => router.push("/relatorios/mensal")}
+                        onClick={() => router.push("/painel/relatorios/mensal")}
                         className="
                             bg-white
                             rounded-2xl
@@ -98,7 +98,7 @@ export default function PainelPage() {
 
                     {/* ANUAL */}
                     <button
-                        onClick={() => router.push("/relatorios/anual")}
+                        onClick={() => router.push("/painel/relatorios/anual")}
                         className="
                             bg-white
                             rounded-2xl

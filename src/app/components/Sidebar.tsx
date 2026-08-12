@@ -1,5 +1,3 @@
-// src/app/components/Sidebar.tsx
-
 'use client'
 
 import Link from "next/link";
@@ -18,14 +16,9 @@ const menuPrincipal: MenuItem[] = [
         icon: "⌂"
     },
     {
-        label: "Agendamentos",
-        href: "/painel/agendamentos",
-        icon: "◷"
-    },
-    {
-        label: "Clientes",
-        href: "/painel/clientes",
-        icon: "♙"
+        label: "Novo Atendimento",
+        href: "/painel/atendimentos",
+        icon: "+"
     },
     {
         label: "Serviços",
@@ -39,16 +32,21 @@ const menuPrincipal: MenuItem[] = [
     }
 ];
 
-const menuFinanceiro: MenuItem[] = [
+const menuRelatorios: MenuItem[] = [
     {
-        label: "Financeiro",
-        href: "/painel/financeiro",
-        icon: "$"
+        label: "Relatório Diário",
+        href: "/painel/relatorios/diario",
+        icon: "📅"
     },
     {
-        label: "Relatórios",
-        href: "/painel/relatorios",
-        icon: "▥"
+        label: "Relatório Mensal",
+        href: "/painel/relatorios/mensal",
+        icon: "📊"
+    },
+    {
+        label: "Relatório Anual",
+        href: "/painel/relatorios/anual",
+        icon: "📈"
     }
 ];
 
@@ -57,24 +55,24 @@ export const Sidebar: React.FC = () => {
     const pathname = usePathname();
 
     return (
-        <aside className="w-64 min-h-screen bg-[#241B35] text-white flex flex-col">
+        <aside className="w-64 min-h-screen bg-[#164E63] text-white flex flex-col">
 
             {/* LOGO */}
             <div className="px-6 py-7 border-b border-white/10">
 
                 <div className="flex items-center gap-3">
 
-                    <div className="w-10 h-10 rounded-xl bg-[#8B5CF6] flex items-center justify-center text-xl font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-[#57C5B6] flex items-center justify-center text-xl font-bold">
                         ✂
                     </div>
 
                     <div>
                         <h1 className="font-black text-lg tracking-tight">
-                            BARBER
+                            GESTÃO
                         </h1>
 
-                        <p className="text-xs text-gray-400">
-                            MANAGEMENT
+                        <p className="text-xs text-white/60">
+                            INTELIGENTE
                         </p>
                     </div>
 
@@ -82,10 +80,11 @@ export const Sidebar: React.FC = () => {
 
             </div>
 
+
             {/* MENU */}
             <nav className="flex-1 px-4 py-6">
 
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-3 mb-3">
+                <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest px-3 mb-3">
                     Principal
                 </p>
 
@@ -106,8 +105,8 @@ export const Sidebar: React.FC = () => {
                                     transition-all
                                     ${
                                         ativo
-                                            ? "bg-[#8B5CF6] text-white shadow-lg shadow-purple-900/20"
-                                            : "text-gray-400 hover:bg-white/5 hover:text-white"
+                                            ? "bg-[#57C5B6] text-white shadow-lg"
+                                            : "text-white/70 hover:bg-white/10 hover:text-white"
                                     }
                                 `}
                             >
@@ -128,13 +127,15 @@ export const Sidebar: React.FC = () => {
                 </div>
 
 
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-3 mb-3 mt-8">
-                    Gestão
+                {/* RELATÓRIOS */}
+
+                <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest px-3 mb-3 mt-8">
+                    Relatórios
                 </p>
 
                 <div className="space-y-1">
 
-                    {menuFinanceiro.map((item) => {
+                    {menuRelatorios.map((item) => {
 
                         const ativo = pathname === item.href;
 
@@ -149,13 +150,13 @@ export const Sidebar: React.FC = () => {
                                     transition-all
                                     ${
                                         ativo
-                                            ? "bg-[#8B5CF6] text-white"
-                                            : "text-gray-400 hover:bg-white/5 hover:text-white"
+                                            ? "bg-[#57C5B6] text-white shadow-lg"
+                                            : "text-white/70 hover:bg-white/10 hover:text-white"
                                     }
                                 `}
                             >
 
-                                <span className="w-5 text-center text-lg">
+                                <span className="w-5 text-center">
                                     {item.icon}
                                 </span>
 
@@ -172,12 +173,14 @@ export const Sidebar: React.FC = () => {
 
             </nav>
 
+
             {/* USUÁRIO */}
+
             <div className="border-t border-white/10 p-4">
 
                 <div className="flex items-center gap-3">
 
-                    <div className="w-10 h-10 rounded-full bg-[#8B5CF6] flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[#57C5B6] flex items-center justify-center font-bold">
                         M
                     </div>
 
@@ -187,13 +190,13 @@ export const Sidebar: React.FC = () => {
                             Maxsuel Lima
                         </p>
 
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-white/50">
                             Proprietário
                         </p>
 
                     </div>
 
-                    <button className="text-gray-500 hover:text-white">
+                    <button className="text-white/50 hover:text-white">
                         ⋮
                     </button>
 

@@ -20,3 +20,4 @@ export async function buscarRelatorioAnual() {
     return response.data;
     
 }
+
