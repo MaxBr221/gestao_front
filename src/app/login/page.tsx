@@ -1,5 +1,5 @@
 'use client'
-import { propAuth } from "../resources/proprietario/proprietario.auth";
+import { propAuth } from "../resources/proprietario/proprietarioService";
 import { Template } from "../components/Template";
 import { Button } from "../components/Button";
 import { InputText } from "../components/InputText";

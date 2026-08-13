@@ -1,11 +1,12 @@
 'use client'
 import { Template } from "../components/Template";
 import { useRouter } from "next/navigation";
+import { propAuth } from "../resources/proprietario/proprietarioService";
 
 export default function PainelPage() {
+    const authProp = propAuth();
 
     const router = useRouter();
-    //mais a frente colocar dashboard de fato
     return (
         <Template>
 
@@ -21,116 +22,58 @@ export default function PainelPage() {
                     </p>
                 </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 -mt-6">
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    {/* DIÁRIO */}
-                    <button
-                        onClick={() => router.push("/painel/relatorios/diario")}
-                        className="
-                            bg-white
-                            rounded-2xl
-                            p-7
-                            text-left
-                            shadow-md
-                            border
-                            border-gray-100
-                            hover:shadow-xl
-                            hover:-translate-y-1
-                            transition-all
-                        "
-                    >
-
-                        <div className="text-4xl mb-5">
-                            📅
-                        </div>
-
-                        <h2 className="text-xl font-bold text-[#1A5F7A]">
-                            Relatório Diário
+                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <p className="text-gray-500 font-bold">
+                            💰 Faturamento Hoje
+                        </p>
+                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            50,00
                         </h2>
-
-                        <p className="text-gray-500 mt-2">
-                            Visualize os atendimentos e o faturamento do dia.
+                        <p className="text-sm text-gray-400 mt-1">
+                            Total faturado hoje
                         </p>
 
-                        <div className="mt-6 text-[#C05C32] font-semibold">
-                            Acessar relatório →
-                        </div>
-
-                    </button>
-
-
-                    {/* MENSAL */}
-                    <button
-                        onClick={() => router.push("/painel/relatorios/mensal")}
-                        className="
-                            bg-white
-                            rounded-2xl
-                            p-7
-                            text-left
-                            shadow-md
-                            border
-                            border-gray-100
-                            hover:shadow-xl
-                            hover:-translate-y-1
-                            transition-all
-                        "
-                    >
-
-                        <div className="text-4xl mb-5">
-                            📊
-                        </div>
-
-                        <h2 className="text-xl font-bold text-[#1A5F7A]">
-                            Relatório Mensal
-                        </h2>
-
-                        <p className="text-gray-500 mt-2">
-                            Analise o faturamento e os serviços realizados no mês.
+                    </div> 
+                    
+                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <p className="text-gray-500 font-bold">
+                            ✂️ Atendimentos Hoje
                         </p>
-
-                        <div className="mt-6 text-[#C05C32] font-semibold">
-                            Acessar relatório →
-                        </div>
-
-                    </button>
-
-
-                    {/* ANUAL */}
-                    <button
-                        onClick={() => router.push("/painel/relatorios/anual")}
-                        className="
-                            bg-white
-                            rounded-2xl
-                            p-7
-                            text-left
-                            shadow-md
-                            border
-                            border-gray-100
-                            hover:shadow-xl
-                            hover:-translate-y-1
-                            transition-all
-                        "
-                    >
-
-                        <div className="text-4xl mb-5">
-                            📈
-                        </div>
-
-                        <h2 className="text-xl font-bold text-[#1A5F7A]">
-                            Relatório Anual
+                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            2
                         </h2>
-
-                        <p className="text-gray-500 mt-2">
-                            Acompanhe a evolução do faturamento durante o ano.
+                        <p className="text-sm text-gray-400 mt-1">
+                            Total de atendimentos
                         </p>
+                    </div> 
 
-                        <div className="mt-6 text-[#C05C32] font-semibold">
-                            Acessar relatório →
-                        </div>
+                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <p className="text-gray-500 font-bold">
+                            🏆 Serviços mais realizados
+                        </p>
+                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            Corte
+                        </h2>
+                        <p className="text-sm text-gray-400 mt-1">
+                            2 atendimentos
+                        </p>
+                    </div>                  
+                </div>
 
-                    </button>
-
+                <div className="grid md:grid-cols-2 gap-6 mt-5">
+                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <p className="text-gray-500 font-bold">
+                            Faturamento da semana
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <p className="text-gray-500 font-bold">
+                            Serviços realizados hoje
+                        </p>
+                    
+                    </div>
                 </div>
 
             </div>
