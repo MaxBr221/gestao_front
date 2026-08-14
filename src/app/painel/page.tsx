@@ -1,12 +1,21 @@
 'use client'
 import { Template } from "../components/Template";
 import { useRouter } from "next/navigation";
-import { propAuth } from "../resources/proprietario/proprietarioService";
-
+import { useEffect, useState } from "react";
+import { buscarRelatorioDiario } from "../resources/relatorio/relatorioService";
 export default function PainelPage() {
-    const authProp = propAuth();
 
     const router = useRouter();
+    const [diario, setDiario] = useState<any>(null);
+ 
+    
+    useEffect(() =>{
+        async function carregarRelatorio() {
+            const dadosDiario = await buscarRelatorioDiario();
+       
+        }
+        carregarRelatorio();
+    }, [])
     return (
         <Template>
 
@@ -29,12 +38,12 @@ export default function PainelPage() {
                             💰 Faturamento Hoje
                         </p>
                         <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            50,00
+                            R$ {diario?.faturamento ?? "0,00"}
                         </h2>
+
                         <p className="text-sm text-gray-400 mt-1">
                             Total faturado hoje
-                        </p>
-
+                        </p>  
                     </div> 
                     
                     <div className="bg-white rounded-2xl shadow-md p-6">
@@ -42,7 +51,7 @@ export default function PainelPage() {
                             ✂️ Atendimentos Hoje
                         </p>
                         <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            2
+                            {diario?.quantAtendimentos ?? 0}
                         </h2>
                         <p className="text-sm text-gray-400 mt-1">
                             Total de atendimentos
@@ -54,10 +63,10 @@ export default function PainelPage() {
                             🏆 Serviços mais realizados
                         </p>
                         <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            Corte
+                            {diario?.servicoMaiorFrequencia ?? "Não há no momento!"}
                         </h2>
                         <p className="text-sm text-gray-400 mt-1">
-                            2 atendimentos
+                            {diario?.quantAtendimentos ?? 0}
                         </p>
                     </div>                  
                 </div>
