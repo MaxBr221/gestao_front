@@ -20,4 +20,9 @@ export async function buscarRelatorioAnual() {
     return response.data;
     
 }
+export async function buscarRelatorioSemanal(){
+    const response = await api.get("/relatorio/semanal")
+    
+    return response.data;
+}
 

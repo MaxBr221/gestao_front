@@ -2,17 +2,17 @@
 import { Template } from "../components/Template";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { buscarRelatorioDiario } from "../resources/relatorio/relatorioService";
+import { buscarRelatorioDiario, buscarRelatorioSemanal } from "../resources/relatorio/relatorioService";
 export default function PainelPage() {
-
     const router = useRouter();
     const [diario, setDiario] = useState<any>(null);
+    const [semanal, setSemanal] = useState<any>(null);
  
     
     useEffect(() =>{
         async function carregarRelatorio() {
             const dadosDiario = await buscarRelatorioDiario();
-       
+            const dadosSemanal = await buscarRelatorioSemanal();       
         }
         carregarRelatorio();
     }, [])
@@ -76,11 +76,18 @@ export default function PainelPage() {
                         <p className="text-gray-500 font-bold">
                             Faturamento da semana
                         </p>
+                        <h2>
+                            {semanal?.dia ?? 0}
+                            {semanal?.faturamento ?? 0}
+                        </h2>
                     </div>
                     <div className="bg-white rounded-2xl shadow-md p-6">
                         <p className="text-gray-500 font-bold">
                             Serviços realizados hoje
                         </p>
+                        <h2>
+                            
+                        </h2>
                     
                     </div>
                 </div>
