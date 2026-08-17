@@ -25,4 +25,10 @@ export async function buscarRelatorioSemanal(){
     
     return response.data;
 }
+export async function  servicosDeHoje() {
+    const response = await api.get("relatorio/servicodehoje")
+
+    return response.data;
+    
+}
 

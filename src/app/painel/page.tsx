@@ -2,17 +2,20 @@
 import { Template } from "../components/Template";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { buscarRelatorioDiario, buscarRelatorioSemanal } from "../resources/relatorio/relatorioService";
+import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from "../resources/relatorio/relatorioService";
 export default function PainelPage() {
     const router = useRouter();
     const [diario, setDiario] = useState<any>(null);
     const [semanal, setSemanal] = useState<any>(null);
+    const [servico, setServico] = useState<any>(null);
+
  
     
     useEffect(() =>{
         async function carregarRelatorio() {
             const dadosDiario = await buscarRelatorioDiario();
-            const dadosSemanal = await buscarRelatorioSemanal();       
+            const dadosSemanal = await buscarRelatorioSemanal(); 
+            const servicosHoje = await servicosDeHoje();      
         }
         carregarRelatorio();
     }, [])
@@ -76,8 +79,8 @@ export default function PainelPage() {
                         <p className="text-gray-500 font-bold">
                             Faturamento da semana
                         </p>
-                        <h2>
-                            {semanal?.dia ?? 0}
+                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            {semanal?.dia}
                             {semanal?.faturamento ?? 0}
                         </h2>
                     </div>
@@ -85,8 +88,9 @@ export default function PainelPage() {
                         <p className="text-gray-500 font-bold">
                             Serviços realizados hoje
                         </p>
-                        <h2>
-                            
+                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            {servico?.nome}
+                            {servico?.quantidade ?? 0}
                         </h2>
                     
                     </div>
