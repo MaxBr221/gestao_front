@@ -68,9 +68,6 @@ export default function PainelPage() {
                         <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
                             {diario?.servicoMaiorFrequencia ?? "Não há no momento!"}
                         </h2>
-                        <p className="text-sm text-gray-400 mt-1">
-                            {diario?.quantAtendimentos ?? 0}
-                        </p>
                     </div>                  
                 </div>
 

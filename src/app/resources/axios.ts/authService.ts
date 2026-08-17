@@ -5,6 +5,7 @@ import { TokenAcesso,  Credencial, Proprietario} from "../proprietario/proprieta
 
 export async function propAuthentication(credencial: Credencial): Promise<TokenAcesso>{
         try{
+            
             const response = await api.post<TokenAcesso>(
                 "/auth/login",
                 credencial

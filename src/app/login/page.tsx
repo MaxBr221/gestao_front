@@ -29,11 +29,11 @@ export default function LoginPage() {
         console.log("1. onSubmit executado");
         console.log("Dados:", form);
          try {
-          const acesso: ProprietarioSessaoToken = await auth.login(form.login, form.senha)
+          const acesso = await auth.login(form.login, form.senha)
+
           if(!acesso){
             throw new Error("Acesso não permitido!");
           }
-          propAuthentication.setUserSession(acesso)
           router.push("/painel");
           console.log("Chegando na page painel!");
 

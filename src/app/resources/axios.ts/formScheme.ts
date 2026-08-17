@@ -3,7 +3,6 @@ import * as Yup from 'yup'
 export interface LoginForm{
     login: string;
     senha: string;
-    confirmarSenha?: string;
 }
 
 export const validationScheme = Yup.object({
@@ -17,4 +16,4 @@ export const validationScheme = Yup.object({
         .min(8, "A senha precisa ter no mínimo 8 caracteres"),
 });
 
-export const formScheme: LoginForm = {login: '', senha: '', confirmarSenha: ''}
+export const formScheme: LoginForm = {login: '', senha: ''}
