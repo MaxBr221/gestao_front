@@ -1,5 +1,4 @@
 'use client'
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,13 +21,8 @@ const menuPrincipal: MenuItem[] = [
     },
     {
         label: "Serviços",
-        href: "/painel/servicos",
+        href: "/painel/servico",
         icon: "✂"
-    },
-    {
-        label: "Barbeiros",
-        href: "/painel/barbeiros",
-        icon: "♙"
     }
 ];
 
