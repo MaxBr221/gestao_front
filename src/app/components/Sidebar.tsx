@@ -41,6 +41,11 @@ const menuRelatorios: MenuItem[] = [
         label: "Relatório Anual",
         href: "/painel/relatorios/anual",
         icon: "📈"
+    },
+    {
+        label: "Sair",
+        href: "/login",
+        icon: "↪"
     }
 ];
 
