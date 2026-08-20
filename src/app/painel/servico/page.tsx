@@ -1,5 +1,5 @@
 'use client'
-import { buscarServicos, cadastrarServico, ServicoRequest, ServicoResponse, deletarServico } from "../../resources/servico/servicoService"
+import { buscarServicos, cadastrarServico, ServicoRequest, ServicoResponse,editarServico, deletarServico } from "../../resources/servico/servicoService"
 import { useEffect, useState } from "react"
 import { Template } from "../../components/Template"
 import { Button } from "../../components/Button";
@@ -12,6 +12,8 @@ export default function ServicoPage(){
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [descricao, setDescricao] = useState("");
+    const [servicoEditando, setServicoEditando] =
+    useState<ServicoResponse | null>(null);
 
 
     async function handleCadastrar() {
@@ -37,16 +39,53 @@ export default function ServicoPage(){
         setServico(dados);
 
     }
-    
-    useEffect(() =>{
-        async function renderizarServicos() {
-            const todoServicos = await buscarServicos();
-            setServico(todoServicos);
-            
-        }
-        renderizarServicos();
+
+    function handlerEditar(servico: ServicoResponse) { 
+        setServicoEditando(servico);
+        setNome(servico.nome);
+        setPreco(String(servico.preco));
+        setDescricao(servico.descricao);
+        setModal(true);
+                          
         
-    },[])
+    }
+    async function handleSalvar() {
+
+        const dados: ServicoRequest = {
+            nome,
+            preco: Number(preco),
+            descricao
+        };
+
+        if (servicoEditando) {
+
+            await editarServico(
+                servicoEditando.id,
+                dados
+            );
+
+        } else {
+
+            await cadastrarServico(dados);
+        }
+
+        await carregarServicos();
+
+        setNome("");
+        setPreco("");
+        setDescricao("");
+        setServicoEditando(null);
+        setModal(false);
+    }
+    
+    async function carregarServicos() {
+        const dados = await buscarServicos();
+        setServico(dados);
+    }
+
+    useEffect(() => {
+        carregarServicos();
+    }, []);
 
 
 
@@ -69,101 +108,117 @@ export default function ServicoPage(){
                         </Button>
                     </div>
                     {modal && (
-                        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-                            <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
 
-                                <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-xl font-bold text-[#1A5F7A]">
-                                        Novo Serviço
-                                    </h2>
+                            {/* Cabeçalho */}
+                            <div className="flex justify-between items-center mb-6">
 
-                                    <button
-                                        onClick={() => setModal(false)}
-                                        className="text-gray-400 hover:text-gray-700"
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
-                                <form className="space-y-5" 
-                                        onSubmit={(e) => {
-                                        e.preventDefault();
-                                        handleCadastrar();
-                                    }}>
+                                <h2 className="text-xl font-bold text-[#1A5F7A]">
+                                    {servicoEditando ? "Editar Serviço" : "Novo Serviço"}
+                                </h2>
 
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Nome
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            placeholder="Ex: Corte masculino"
-                                            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 
-                                            placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-[#50C4B5]"
-                                            value={nome}
-                                            onChange={(n) => setNome(n.target.value)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Preço
-                                        </label>
-
-                                        <input
-                                            type="number"
-                                            placeholder="Ex: 30.00"
-                                            className="w-full border border-gray-300 rounded-xl px-4 py-3 
-                                            text-gray-800 outline-none focus:ring-2 focus:ring-[#50C4B5]"
-                                            value={preco}
-                                            onChange={(p) => setPreco(p.target.value)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Descrição
-                                        </label>
-
-                                        <textarea
-                                            placeholder="Descrição do serviço"
-                                            rows={3}
-                                            className="w-full border border-gray-300 rounded-xl px-4 py-3 
-                                            text-gray-800 outline-none focus:ring-2 focus:ring-[#50C4B5] resize-none"
-                                            value={descricao}
-                                            onChange={(d) => setDescricao(d.target.value)}
-                                        />
-                                    </div>
-
-                                    {/* Botões */}
-                                    <div className="flex justify-end gap-3 pt-2">
-
-                                        <button
-                                            type="button"
-                                            onClick={() => setModal(false)}
-                                            className="px-5 py-3 rounded-xl font-medium 
-                                            text-gray-600 hover:bg-gray-100 transition"
-                                        >
-                                            Cancelar
-                                        </button>
-
-                                        <button
-                                            type="submit"
-                                            className="px-5 py-3 rounded-xl bg-[#50C4B5] 
-                                            text-white font-bold hover:bg-[#43B3A5] transition"
-                                        >
-                                            Cadastrar
-                                        </button>
-                                    </div>
-                                </form>
-                                    
-
+                                <button
+                                    type="button"
+                                    onClick={() => setModal(false)}
+                                    className="text-gray-400 hover:text-gray-700"
+                                >
+                                    ✕
+                                </button>
 
                             </div>
 
+                            {/* Formulário */}
+                            <form
+                                className="space-y-5"
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleSalvar();
+                                }}
+                            >
+
+                                {/* Nome */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Nome
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: Corte masculino"
+                                        value={nome}
+                                        onChange={(e) => setNome(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-xl px-4 py-3
+                                        text-gray-800 placeholder:text-gray-400 outline-none
+                                        focus:ring-2 focus:ring-[#50C4B5]"
+                                    />
+                                </div>
+
+                                {/* Preço */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Preço
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        placeholder="Ex: 30.00"
+                                        value={preco}
+                                        onChange={(e) => setPreco(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-xl px-4 py-3
+                                        text-gray-800 placeholder:text-gray-400 outline-none
+                                        focus:ring-2 focus:ring-[#50C4B5]"
+                                    />
+                                </div>
+
+                                {/* Descrição */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Descrição
+                                    </label>
+
+                                    <textarea
+                                        placeholder="Descrição do serviço"
+                                        rows={3}
+                                        value={descricao}
+                                        onChange={(e) => setDescricao(e.target.value)}
+                                        className="w-full border border-gray-300 rounded-xl px-4 py-3
+                                        text-gray-800 placeholder:text-gray-400 outline-none
+                                        focus:ring-2 focus:ring-[#50C4B5] resize-none"
+                                    />
+                                </div>
+
+                                {/* Botões */}
+                                <div className="flex justify-end gap-3 pt-2">
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setModal(false)}
+                                        className="px-5 py-3 rounded-xl font-medium
+                                        text-gray-600 hover:bg-gray-100 transition"
+                                    >
+                                        Cancelar
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        className="px-5 py-3 rounded-xl bg-[#50C4B5]
+                                        text-white font-bold hover:bg-[#43B3A5] transition"
+                                    >
+                                        {servicoEditando
+                                            ? "Salvar alterações"
+                                            : "Cadastrar"}
+                                    </button>
+
+                                </div>
+
+                            </form>
+
                         </div>
-                    )}
+
+                    </div>
+                )}
                 </div>
                 <div className="bg-white rounded-2xl shadow-md overflow-hidden">
                     <div className="grid grid-cols-3 px-6 py-4 border-b bg-gray-50">
@@ -193,7 +248,7 @@ export default function ServicoPage(){
                             </span>
 
                             <div className="flex justify-end gap-3">
-                                <button>✏️</button>
+                                <button onClick={() => handlerEditar(servico)}>✏️</button>
                                 <button onClick={() => handlerDeletar(servico.id)}>🗑️</button>
                             </div>
                         </div>

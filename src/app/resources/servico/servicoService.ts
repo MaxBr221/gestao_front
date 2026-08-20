@@ -30,3 +30,10 @@ export async function deletarServico(id: number) {
 
 }
 // implementar função de editar servico 
+export async function editarServico(id: number, servico: ServicoRequest) {
+
+    const response = await api.put(`/servico/${id}`, servico);
+
+    return response.data;
+    
+}
