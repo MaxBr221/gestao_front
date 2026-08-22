@@ -93,7 +93,7 @@ export default function ServicoPage(){
         <Template>
             <div className="w-full max-w-6xl mx-auto px-6 py-10">
                  <div className="flex items-center justify-between mb-10">
-                    <div className="">
+                    <div>
                         <h1 className="text-3xl font-bold text-[#1A5F7A]">
                             ✂️ Servicos 
                         </h1>

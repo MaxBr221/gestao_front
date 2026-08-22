@@ -16,7 +16,7 @@ const menuPrincipal: MenuItem[] = [
     },
     {
         label: "Novo Atendimento",
-        href: "/painel/atendimentos",
+        href: "/painel/atendimento",
         icon: "+"
     },
     {
