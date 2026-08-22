@@ -2,7 +2,8 @@
 import { Template } from "../../components/Template"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import { ServicoRequest, ServicoResponse, buscarServicos } from "../../resources/servico/servicoService"
+import { AtendimentoRequest, cadastrarAtendimento } from "../..//resources/atendimento/atendimentoService"
+import { ServicoResponse, buscarServicos } from "../../resources/servico/servicoService"
 
 export default function AtendimentoPage(){
     const router = useRouter()
@@ -46,7 +47,42 @@ export default function AtendimentoPage(){
         (soma, servico) => soma + Number(servico.preco),
         0
     );
+   async function cadastroAtendimento() {
 
+        if (servicosSelecionados.length === 0) {
+            alert("Selecione pelo menos um serviço.");
+            return;
+        }
+
+        try {
+
+            const dados: AtendimentoRequest = {
+                usuarioId: 1,
+                formaPagamento: "PIX",
+                observacao: "",
+                data: new Date().toISOString().slice(0, 19),
+                servicosIds: servicosSelecionados.map(
+                    servico => servico.id
+                )
+            };
+
+            console.log("Enviando:", dados);
+
+            const resposta = await cadastrarAtendimento(dados);
+
+            console.log("Atendimento cadastrado:", resposta);
+
+            alert("Atendimento registrado com sucesso!");
+
+        } catch (error) {
+
+            console.error("Erro ao cadastrar atendimento:", error);
+
+            alert("Erro ao registrar atendimento.");
+
+        
+        }
+    }
 
 
     return(
@@ -195,6 +231,7 @@ export default function AtendimentoPage(){
                             className="w-full mt-6 bg-[#50C4B5] text-white
                             font-bold py-3 rounded-xl hover:bg-[#43B3A5]
                             transition"
+                            onClick={cadastroAtendimento}
                             
                         >
                             Registrar Atendimento
