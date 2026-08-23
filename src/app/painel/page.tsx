@@ -6,16 +6,28 @@ import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from ".
 export default function PainelPage() {
     const router = useRouter();
     const [diario, setDiario] = useState<any>(null);
-    const [semanal, setSemanal] = useState<any>(null);
-    const [servico, setServico] = useState<any>(null);
+    const [semanal, setSemanal] = useState<RelatorioSemanalResponse[]>([]);
+    const [servico, setServico] = useState<ServicosRealizado[]>([]);
 
+
+interface RelatorioSemanalResponse {
+    dia: string;
+    faturamento: number;
+}
  
+interface ServicosRealizado{
+    nome: string;
+    quantidade: number
+}
     
     useEffect(() =>{
         async function carregarRelatorio() {
             const dadosDiario = await buscarRelatorioDiario();
             const dadosSemanal = await buscarRelatorioSemanal(); 
-            const servicosHoje = await servicosDeHoje();      
+            const servicosHoje = await servicosDeHoje();   
+            setDiario(dadosDiario);
+            setSemanal(dadosSemanal);
+            setServico(servicosHoje);   
         }
         carregarRelatorio();
     }, [])
@@ -70,29 +82,66 @@ export default function PainelPage() {
                         </h2>
                     </div>                  
                 </div>
-
                 <div className="grid md:grid-cols-2 gap-6 mt-5">
+
+                    {/* Faturamento semanal */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
+
                         <p className="text-gray-500 font-bold">
                             Faturamento da semana
                         </p>
-                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            {semanal?.dia}
-                            {semanal?.faturamento ?? 0}
-                        </h2>
+
+                        <div className="mt-4 space-y-3">
+
+                            {semanal.map((relatorio) => (
+                                <div
+                                    key={relatorio.dia}
+                                    className="flex justify-between items-center"
+                                >
+                                    <span className="text-gray-600 font-medium">
+                                        {relatorio.dia}
+                                    </span>
+
+                                    <span className="text-[#1A5F7A] font-bold">
+                                        R$ {relatorio.faturamento}
+                                    </span>
+                                </div>
+                            ))}
+
+                        </div>
+
                     </div>
+
+
+                    {/* Serviços realizados */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
+
                         <p className="text-gray-500 font-bold">
                             Serviços realizados hoje
                         </p>
-                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            {servico?.nome}
-                            {servico?.quantidade ?? 0}
-                        </h2>
-                    
-                    </div>
-                </div>
 
+                        <div className="mt-4 space-y-3">
+
+                            {servico.map((item) => (
+                                <div
+                                    key={item.nome}
+                                    className="flex justify-between items-center"
+                                >
+                                    <span className="text-gray-600 font-medium">
+                                        {item.nome}
+                                    </span>
+
+                                    <span className="text-[#1A5F7A] font-bold">
+                                        {item.quantidade}
+                                    </span>
+                                </div>
+                            ))}
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
         </Template>
