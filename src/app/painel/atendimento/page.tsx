@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { AtendimentoRequest, cadastrarAtendimento } from "../..//resources/atendimento/atendimentoService"
 import { ServicoResponse, buscarServicos } from "../../resources/servico/servicoService"
+import { notification } from "../../components/notification/index";
 
 export default function AtendimentoPage(){
     const router = useRouter()
@@ -68,14 +69,16 @@ export default function AtendimentoPage(){
             console.log("Enviando:", dados);
 
             const resposta = await cadastrarAtendimento(dados);
-
+             notification().notify(
+                "Atendimento cadastrado com sucesso!",
+                "success"
+            );
             console.log("Atendimento cadastrado:", resposta);
-
-            alert("Atendimento registrado com sucesso!");
 
         } catch (error) {
 
             console.error("Erro ao cadastrar atendimento:", error);
+            notification().notify("Não foi possível cadastrar o atendimento.", "error");
 
             alert("Erro ao registrar atendimento.");
 

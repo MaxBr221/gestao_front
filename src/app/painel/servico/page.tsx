@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { Template } from "../../components/Template"
 import { Button } from "../../components/Button";
 import { useRouter } from "next/navigation";
+import { notification } from "../../components/notification/index";
+
 
 export default function ServicoPage(){
     const router = useRouter();
@@ -37,6 +39,7 @@ export default function ServicoPage(){
         await deletarServico(id);
         const dados = await buscarServicos();
         setServico(dados);
+        notification().notify("Servico deletado com sucesso!", "success");
 
     }
 
@@ -63,10 +66,13 @@ export default function ServicoPage(){
                 servicoEditando.id,
                 dados
             );
+            notification().notify("Servico editado com sucesso!", "success");
 
         } else {
 
             await cadastrarServico(dados);
+            notification().notify("Serviço cadastrado com sucesso!",
+            "success")
         }
 
         await carregarServicos();

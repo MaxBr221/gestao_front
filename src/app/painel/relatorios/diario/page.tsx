@@ -13,14 +13,12 @@ export default function RelatorioDiarioPage() {
 
     const [relatorio, setRelatorio] = useState<Relatorio | null>(null);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
 
+    useEffect(() => {
         async function carregar() {
             try {
-
                 const dados = await buscarRelatorioDiario();
-
-                console.log("Relatório:", dados);
+                console.log("Relatório Diario:", dados);
 
                 setRelatorio(dados);
 

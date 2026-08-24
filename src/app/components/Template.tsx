@@ -1,6 +1,7 @@
 'use client'
 import { Footer } from "./Footer"
 import { Header } from "./Header"
+import ToastApp from "./notification/ToastApp"
 
 
 interface TemplateProps{
@@ -15,6 +16,7 @@ export const Template: React.FC<TemplateProps> = ({children, loading = true}) =>
                 <main className="flex-1 container mx-auto">
                     {children}
                 </main>
+                <ToastApp />
             <Footer/>
 
         </div>

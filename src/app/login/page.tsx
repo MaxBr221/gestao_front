@@ -7,14 +7,17 @@ import { LoginForm, validationScheme } from "../resources/axios.ts/formScheme";
 import { userAuth } from "../hooks/userAuth";
 import { ProprietarioSessaoToken } from "../resources/proprietario/proprietario.resources";
 import { useState } from "react";
+import { FieldError } from "../components/FieldError";
 import { useFormik } from "formik";
 import { useRouter } from 'next/navigation';
+import { notification } from '../components/notification'
 
 
 export default function LoginPage() {
     const auth = userAuth();
     const propAuthentication = propAuth();
     const router = useRouter();
+    const { notify } = notification();
     const {values, handleChange, handleSubmit, errors, resetForm} = useFormik< LoginForm >({
         initialValues:{
             login: '',
@@ -32,6 +35,7 @@ export default function LoginPage() {
           const acesso = await auth.login(form.login, form.senha)
 
           if(!acesso){
+            notify("Acesso negado!", "error");
             throw new Error("Acesso não permitido!");
           }
           router.push("/painel");
@@ -64,8 +68,8 @@ export default function LoginPage() {
                                 name="login"
                                 value={values.login}
                                 onChange={handleChange}
-                                placeholder="Digite seu Login"
-                                />
+                                placeholder="Digite seu Login"/>
+                                < FieldError error ={errors.login}/>
                         </div>
                         <label>Senha</label>
                         <div className="py-3">
@@ -76,6 +80,7 @@ export default function LoginPage() {
                                 value={values.senha}
                                 onChange={handleChange}
                                 placeholder="Digite sua Senha"/>
+                                < FieldError   error ={errors.senha}/>
                         </div>
                         <div> 
                             <Button 

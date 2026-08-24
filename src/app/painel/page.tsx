@@ -42,12 +42,12 @@ interface ServicosRealizado{
         }
         carregarRelatorio();
     }, [])
+    
     return (
         <Template>
+            <div className="w-full max-w-6xl mx-auto px-6 py-6">
 
-            <div className="w-full max-w-6xl mx-auto px-6 py-10">
-
-                <div className="mb-10">
+                <div className="mb-6">
                     <h1 className="text-3xl font-bold text-[#1A5F7A]">
                         Painel de Gestão
                     </h1>
@@ -57,7 +57,7 @@ interface ServicosRealizado{
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 -mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
                     <div className="bg-white rounded-2xl shadow-md p-6">
                         <p className="text-gray-500 font-bold">
@@ -100,7 +100,7 @@ interface ServicosRealizado{
                             Faturamento da semana
                         </p>
 
-                       <ResponsiveContainer width="100%" height={320}>
+                       <ResponsiveContainer width="100%" height={250}>
                             <BarChart data={semanal}>
 
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -127,30 +127,48 @@ interface ServicosRealizado{
 
                     </div>
                     <div className="bg-white rounded-2xl shadow-md p-6">
-
-                        <p className="text-gray-500 font-bold">
+                        <p className="text-gray-500 font-bold mb-6">
                             Serviços realizados hoje
                         </p>
 
-                        <div className="mt-4 space-y-3">
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart
+                                data={servico}
+                                layout="vertical"
+                                margin={{
+                                    top: 5,
+                                    right: 20,
+                                    left: 20,
+                                    bottom: 5,
+                                }}
+                            >
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    horizontal={false}
+                                />
 
-                            {servico.map((item) => (
-                                <div
-                                    key={item.nome}
-                                    className="flex justify-between items-center"
-                                >
-                                    <span className="text-gray-600 font-medium">
-                                        {item.nome}
-                                    </span>
+                                <XAxis
+                                    type="number"
+                                    allowDecimals={false}
+                                />
 
-                                    <span className="text-[#1A5F7A] font-bold">
-                                        {item.quantidade}
-                                    </span>
-                                </div>
-                            ))}
+                                <YAxis
+                                    type="category"
+                                    dataKey="nome"
+                                    width={100}
+                                />
 
-                        </div>
+                                <Tooltip
+                                    formatter={(value) => [`${value}`, "Quantidade"]}
+                                />
 
+                                <Bar
+                                    dataKey="quantidade"
+                                    fill="#1A5F7A"
+                                    radius={[0, 8, 8, 0]}
+                                />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </div>
 
                 </div>
