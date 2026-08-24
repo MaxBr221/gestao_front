@@ -2,7 +2,9 @@
 import { Template } from "../components/Template";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer } from "recharts";
 import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from "../resources/relatorio/relatorioService";
+
 export default function PainelPage() {
     const router = useRouter();
     const [diario, setDiario] = useState<any>(null);
@@ -14,6 +16,15 @@ interface RelatorioSemanalResponse {
     dia: string;
     faturamento: number;
 }
+const diasSemana: Record<string, string> = {
+    MONDAY: "Seg",
+    TUESDAY: "Ter",
+    WEDNESDAY: "Qua",
+    THURSDAY: "Qui",
+    FRIDAY: "Sex",
+    SATURDAY: "Sáb",
+    SUNDAY: "Dom"
+};
  
 interface ServicosRealizado{
     nome: string;
@@ -83,37 +94,38 @@ interface ServicosRealizado{
                     </div>                  
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-5">
-
-                    {/* Faturamento semanal */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
-                        <p className="text-gray-500 font-bold">
+                        <p className="text-gray-500 font-bold mb-6">
                             Faturamento da semana
                         </p>
 
-                        <div className="mt-4 space-y-3">
+                       <ResponsiveContainer width="100%" height={320}>
+                            <BarChart data={semanal}>
 
-                            {semanal.map((relatorio) => (
-                                <div
-                                    key={relatorio.dia}
-                                    className="flex justify-between items-center"
-                                >
-                                    <span className="text-gray-600 font-medium">
-                                        {relatorio.dia}
-                                    </span>
+                                <CartesianGrid strokeDasharray="3 3" />
 
-                                    <span className="text-[#1A5F7A] font-bold">
-                                        R$ {relatorio.faturamento}
-                                    </span>
-                                </div>
-                            ))}
+                                <XAxis
+                                    dataKey="dia"
+                                    tickFormatter={(dia) => diasSemana[dia]}
+                                />
+                               <YAxis
+                                    domain={[0, "auto"]}
+                                />
+                                <Tooltip
+                                    formatter={(value) => `R$ ${value}`}
+                                />
 
-                        </div>
+                                <Bar
+                                    dataKey="faturamento"
+                                    fill="#1A5F7A"
+                                    radius={[8, 8, 0, 0]}
+                                />
+
+                            </BarChart>
+                        </ResponsiveContainer>
 
                     </div>
-
-
-                    {/* Serviços realizados */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
                         <p className="text-gray-500 font-bold">

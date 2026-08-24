@@ -60,7 +60,6 @@ export default function AtendimentoPage(){
                 usuarioId: 1,
                 formaPagamento: "PIX",
                 observacao: "",
-                data: new Date().toISOString().slice(0, 19),
                 servicosIds: servicosSelecionados.map(
                     servico => servico.id
                 )

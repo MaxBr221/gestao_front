@@ -3,7 +3,6 @@ export interface AtendimentoRequest {
     usuarioId: number;
     formaPagamento: FormaPagamento;
     observacao?: string;
-    data: string;
     servicosIds: number[];
 }
 export type FormaPagamento = 
