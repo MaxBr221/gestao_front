@@ -2,6 +2,7 @@
 import { Footer } from "./Footer"
 import { Header } from "./Header"
 import ToastApp from "./notification/ToastApp"
+import { Sidebar } from "./Sidebar"
 
 
 interface TemplateProps{
@@ -11,13 +12,23 @@ interface TemplateProps{
 
 export const Template: React.FC<TemplateProps> = ({children, loading = true}) =>{
     return(
-        <div className="flex flex-col min-h-screen w-full bg-[#FDFBF7] font-sans selection:bg-[#57C5B6]/30">
-            <Header/>
-                <main className="flex-1 container mx-auto">
+        <div className="flex min-h-screen w-full bg-[#FDFBF7] font-sans">
+            
+            <Sidebar />
+
+            <div className="flex flex-col flex-1 min-w-0">
+                
+                <Header />
+
+               <main className="flex-1 w-full">
                     {children}
                 </main>
-                <ToastApp />
-            <Footer/>
+
+                <Footer />
+
+            </div>
+
+            <ToastApp />
 
         </div>
     )

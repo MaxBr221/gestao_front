@@ -93,82 +93,128 @@ interface ServicosRealizado{
                         </h2>
                     </div>                  
                 </div>
-                <div className="grid md:grid-cols-2 gap-6 mt-5">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+                    {/* FATURAMENTO DA SEMANA */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
-                        <p className="text-gray-500 font-bold mb-6">
-                            Faturamento da semana
-                        </p>
+                        <div className="mb-6">
+                            <h2 className="text-gray-700 font-bold text-lg">
+                                Faturamento da semana
+                            </h2>
 
-                       <ResponsiveContainer width="100%" height={250}>
-                            <BarChart data={semanal}>
+                            <p className="text-gray-400 text-sm mt-1">
+                                Acompanhe o faturamento de cada dia
+                            </p>
+                        </div>
 
-                                <CartesianGrid strokeDasharray="3 3" />
+                        <div className="w-full h-[260px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    data={semanal}
+                                    margin={{
+                                        top: 10,
+                                        right: 10,
+                                        left: 0,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        vertical={false}
+                                    />
 
-                                <XAxis
-                                    dataKey="dia"
-                                    tickFormatter={(dia) => diasSemana[dia]}
-                                />
-                               <YAxis
-                                    domain={[0, "auto"]}
-                                />
-                                <Tooltip
-                                    formatter={(value) => `R$ ${value}`}
-                                />
+                                    <XAxis
+                                        dataKey="dia"
+                                        tickFormatter={(dia) => diasSemana[dia]}
+                                        tick={{ fontSize: 12 }}
+                                    />
 
-                                <Bar
-                                    dataKey="faturamento"
-                                    fill="#1A5F7A"
-                                    radius={[8, 8, 0, 0]}
-                                />
+                                    <YAxis
+                                        domain={[0, "auto"]}
+                                        allowDecimals={false}
+                                        tick={{ fontSize: 12 }}
+                                    />
 
-                            </BarChart>
-                        </ResponsiveContainer>
+                                    <Tooltip
+                                        formatter={(value) => [
+                                            `R$ ${value}`,
+                                            "Faturamento",
+                                        ]}
+                                        labelFormatter={(dia) =>
+                                            diasSemana[dia as number]
+                                        }
+                                    />
 
+                                    <Bar
+                                        dataKey="faturamento"
+                                        fill="#1A5F7A"
+                                        radius={[8, 8, 0, 0]}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
+
+
+                    {/* SERVIÇOS REALIZADOS */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
-                        <p className="text-gray-500 font-bold mb-6">
-                            Serviços realizados hoje
-                        </p>
 
-                        <ResponsiveContainer width="100%" height={250}>
-                            <BarChart
-                                data={servico}
-                                layout="vertical"
-                                margin={{
-                                    top: 5,
-                                    right: 20,
-                                    left: 20,
-                                    bottom: 5,
-                                }}
-                            >
-                                <CartesianGrid
-                                    strokeDasharray="3 3"
-                                    horizontal={false}
-                                />
+                        <div className="mb-6">
+                            <h2 className="text-gray-700 font-bold text-lg">
+                                Serviços realizados hoje
+                            </h2>
 
-                                <XAxis
-                                    type="number"
-                                    allowDecimals={false}
-                                />
+                            <p className="text-gray-400 text-sm mt-1">
+                                Quantidade de cada serviço realizado
+                            </p>
+                        </div>
 
-                                <YAxis
-                                    type="category"
-                                    dataKey="nome"
-                                    width={100}
-                                />
+                        <div className="w-full h-[260px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    data={servico}
+                                    layout="vertical"
+                                    margin={{
+                                        top: 5,
+                                        right: 20,
+                                        left: 5,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        horizontal={false}
+                                    />
 
-                                <Tooltip
-                                    formatter={(value) => [`${value}`, "Quantidade"]}
-                                />
+                                    <XAxis
+                                        type="number"
+                                        allowDecimals={false}
+                                        tick={{ fontSize: 12 }}
+                                    />
 
-                                <Bar
-                                    dataKey="quantidade"
-                                    fill="#1A5F7A"
-                                    radius={[0, 8, 8, 0]}
-                                />
-                            </BarChart>
-                        </ResponsiveContainer>
+                                    <YAxis
+                                        type="category"
+                                        dataKey="nome"
+                                        width={90}
+                                        tick={{ fontSize: 12 }}
+                                    />
+
+                                    <Tooltip
+                                        formatter={(value) => [
+                                            `${value}`,
+                                            "Quantidade",
+                                        ]}
+                                    />
+
+                                    <Bar
+                                        dataKey="quantidade"
+                                        fill="#1A5F7A"
+                                        radius={[0, 8, 8, 0]}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
 
                 </div>

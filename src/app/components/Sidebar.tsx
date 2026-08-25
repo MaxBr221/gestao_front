@@ -54,7 +54,7 @@ export const Sidebar: React.FC = () => {
     const pathname = usePathname();
 
     return (
-        <aside className="w-64 min-h-screen bg-[#164E63] text-white flex flex-col">
+        <aside className="w-64 min-h-screen shrink-0 bg-[#164E63] text-white flex flex-col">
 
             {/* LOGO */}
             <div className="px-6 py-7 border-b border-white/10">
