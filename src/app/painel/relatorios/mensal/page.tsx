@@ -3,6 +3,8 @@ import { Template } from "../../../components/Template";
 import { useEffect, useState } from "react";
 import { buscarRelatorioMensal } from "../../../resources/relatorio/relatorioService";
 import { RelatorioCard } from "../../../components/RelatorioCard";
+import { PainelLayout } from "../../../components/PainelLayout";
+
 
 
 export default function RelatorioMensalPage() {
@@ -68,7 +70,7 @@ export default function RelatorioMensalPage() {
 
 
     return (
-         <Template>
+         <PainelLayout>
 
             <div className="px-6 py-10">
 
@@ -128,6 +130,6 @@ export default function RelatorioMensalPage() {
 
             </div>
 
-        </Template>
+        </PainelLayout>
     );
 }

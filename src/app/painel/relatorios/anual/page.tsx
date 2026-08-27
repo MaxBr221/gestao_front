@@ -4,6 +4,8 @@ import { Template } from "../../../components/Template";
 import { useEffect, useState } from "react";
 import { buscarRelatorioAnual } from "../../../resources/relatorio/relatorioService";
 import { RelatorioCard } from "../../../components/RelatorioCard";
+import { PainelLayout } from "../../../components/PainelLayout";
+
 
 
 export default function RelatorioAnualPage() {
@@ -69,7 +71,7 @@ export default function RelatorioAnualPage() {
 
 
     return (
-        <Template>
+        <PainelLayout>
 
             <div className="px-6 py-10">
 
@@ -129,6 +131,6 @@ export default function RelatorioAnualPage() {
 
             </div>
 
-        </Template>
+        </PainelLayout>
     );
 }

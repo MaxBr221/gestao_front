@@ -5,6 +5,8 @@ import { Template } from "../../components/Template"
 import { Button } from "../../components/Button";
 import { useRouter } from "next/navigation";
 import { notification } from "../../components/notification/index";
+import { PainelLayout } from "../../components/PainelLayout";
+
 
 
 export default function ServicoPage(){
@@ -96,7 +98,7 @@ export default function ServicoPage(){
 
 
     return(
-        <Template>
+        <PainelLayout>
             <div className="w-full max-w-6xl mx-auto px-6 py-10">
                  <div className="flex items-center justify-between mb-10">
                     <div>
@@ -261,7 +263,7 @@ export default function ServicoPage(){
                  ))}
                  </div>
             </div>
-        </Template>
+        </PainelLayout>
     )
 
 }

@@ -1,5 +1,6 @@
 'use client'
 import { Template } from "../components/Template";
+import { PainelLayout } from "../components/PainelLayout";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer } from "recharts";
@@ -44,7 +45,7 @@ interface ServicosRealizado{
     }, [])
     
     return (
-        <Template>
+          <PainelLayout>
             <div className="w-full max-w-6xl mx-auto px-6 py-6">
 
                 <div className="mb-6">
@@ -220,6 +221,6 @@ interface ServicosRealizado{
                 </div>
             </div>
 
-        </Template>
+        </PainelLayout>
     );
 }
