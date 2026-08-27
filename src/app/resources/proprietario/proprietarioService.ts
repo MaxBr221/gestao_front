@@ -67,15 +67,6 @@ class PropriAuth{
         }
         return sessao;
     }
-    logout() {
-        try {
-            localStorage.removeItem(PropriAuth.AUTH_PARAM);
-            localStorage.remove("token", { path: '/' });
-            console.log("Sessão encerrada com sucesso.");
-        } catch (error) {
-            console.error("Erro ao efetuar logout:", error);
-        }
-    }
 
 
 }
