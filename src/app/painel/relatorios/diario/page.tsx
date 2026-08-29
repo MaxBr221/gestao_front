@@ -1,9 +1,11 @@
 'use client'
-import { Template } from "../../../components/Template";
+import { AuthTemplate } from "../../../components/Template";
 import { useEffect, useState } from "react";
 import { buscarRelatorioDiario } from "../../../resources/relatorio/relatorioService";
 import { RelatorioCard } from "../../../components/RelatorioCard";
 import { PainelLayout } from "../../../components/PainelLayout";
+import { notification } from "../../../components/notification/index";
+
 
 interface Relatorio {
     faturamento: number;
@@ -25,8 +27,8 @@ export default function RelatorioDiarioPage() {
                 setRelatorio(dados);
 
             } catch (error) {
-
                 console.error("Erro ao carregar relatório diário:", error);
+                notification().notify("Erro ao carregar relatorio diario!", "error")
 
             } finally {
 
@@ -43,25 +45,25 @@ export default function RelatorioDiarioPage() {
 
     if (loading) {
         return (
-            <Template>
+            <AuthTemplate>
                 <div className="flex justify-center items-center py-20">
                     <p className="text-gray-500">
                         Carregando relatório...
                     </p>
                 </div>
-            </Template>
+            </AuthTemplate>
         );
     }
 
     if (!relatorio) {
         return (
-            <Template>
+            <AuthTemplate>
                 <div className="text-center py-20">
                     <h2 className="text-xl font-bold text-gray-700">
                         Não foi possível carregar o relatório.
                     </h2>
                 </div>
-            </Template>
+            </AuthTemplate>
         );
     }
 

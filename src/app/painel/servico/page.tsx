@@ -1,13 +1,10 @@
 'use client'
 import { buscarServicos, cadastrarServico, ServicoRequest, ServicoResponse,editarServico, deletarServico } from "../../resources/servico/servicoService"
 import { useEffect, useState } from "react"
-import { Template } from "../../components/Template"
 import { Button } from "../../components/Button";
 import { useRouter } from "next/navigation";
 import { notification } from "../../components/notification/index";
 import { PainelLayout } from "../../components/PainelLayout";
-
-
 
 export default function ServicoPage(){
     const router = useRouter();

@@ -1,5 +1,4 @@
 'use client'
-import { Template } from "../../components/Template"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { AtendimentoRequest, cadastrarAtendimento } from "../..//resources/atendimento/atendimentoService"
@@ -53,14 +52,13 @@ export default function AtendimentoPage(){
    async function cadastroAtendimento() {
 
         if (servicosSelecionados.length === 0) {
-            alert("Selecione pelo menos um serviço.");
+            notification().notify("Selecione pelo menos um serviço.", "info");
             return;
         }
 
         try {
 
             const dados: AtendimentoRequest = {
-                usuarioId: 1,
                 formaPagamento: "PIX",
                 observacao: "",
                 servicosIds: servicosSelecionados.map(
@@ -69,22 +67,16 @@ export default function AtendimentoPage(){
             };
 
             console.log("Enviando:", dados);
-
-            const resposta = await cadastrarAtendimento(dados);
+            await cadastrarAtendimento(dados);
              notification().notify(
                 "Atendimento cadastrado com sucesso!",
                 "success"
             );
-            console.log("Atendimento cadastrado:", resposta);
 
         } catch (error) {
 
             console.error("Erro ao cadastrar atendimento:", error);
             notification().notify("Não foi possível cadastrar o atendimento.", "error");
-
-            alert("Erro ao registrar atendimento.");
-
-        
         }
     }
 
@@ -94,7 +86,6 @@ export default function AtendimentoPage(){
 
             <div className="w-full max-w-6xl mx-auto px-6 py-10">
 
-                {/* Cabeçalho */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-[#1A5F7A]">
                         Novo Atendimento
@@ -105,10 +96,8 @@ export default function AtendimentoPage(){
                     </p>
                 </div>
 
-                {/* Conteúdo */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    {/* Serviços */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
                         <h2 className="text-xl font-bold text-[#1A5F7A] mb-2">
@@ -118,8 +107,6 @@ export default function AtendimentoPage(){
                         <p className="text-gray-500 mb-6">
                             Selecione os serviços realizados.
                         </p>
-
-                        {/* Aqui depois entra o map dos serviços */}
                         <div className="space-y-3">
 
                             {servicos.map((servico) => {
@@ -168,14 +155,12 @@ export default function AtendimentoPage(){
 
                     </div>
 
-                    {/* Resumo */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
                         <h2 className="text-xl font-bold text-[#1A5F7A] mb-6">
                             📋 Resumo do atendimento
                         </h2>
 
-                        {/* Serviços selecionados */}
                        <div className="min-h-[200px]">
 
                             {servicosSelecionados.length === 0 ? (
@@ -211,8 +196,6 @@ export default function AtendimentoPage(){
                             )}
 
                         </div>
-
-                        {/* Total */}
                         <div className="border-t pt-5 mt-5">
 
                             <div className="flex justify-between items-center">
@@ -229,7 +212,6 @@ export default function AtendimentoPage(){
 
                         </div>
 
-                        {/* Botão */}
                         <button
                             type="button"
                             className="w-full mt-6 bg-[#50C4B5] text-white

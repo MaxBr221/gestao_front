@@ -1,9 +1,11 @@
 'use client'
-import { Template } from "../../../components/Template";
+import { AuthTemplate } from "../../../components/Template";
 import { useEffect, useState } from "react";
 import { buscarRelatorioAnual } from "../../../resources/relatorio/relatorioService";
 import { RelatorioCard } from "../../../components/RelatorioCard";
 import { PainelLayout } from "../../../components/PainelLayout";
+import { notification } from "../../../components/notification/index";
+
 
 
 
@@ -22,7 +24,6 @@ export default function RelatorioAnualPage() {
                 const dados = await buscarRelatorioAnual();
 
                 console.log("Relatório recebido:", dados);
-
                 setRelatorio(dados);
 
             } catch (error) {
@@ -31,6 +32,7 @@ export default function RelatorioAnualPage() {
                     "Erro ao carregar relatório Anual:",
                     error
                 );
+                notification().notify("Error ao carregar relatorio anual!", "error")
 
             }
             finally {
@@ -46,25 +48,25 @@ export default function RelatorioAnualPage() {
     }, []);
     if (loading) {
         return (
-            <Template>
+            <AuthTemplate>
                 <div className="flex justify-center items-center py-20">
                     <p className="text-gray-500">
                         Carregando relatório...
                     </p>
                 </div>
-            </Template>
+            </AuthTemplate>
         );
     }
 
     if (!relatorio) {
         return (
-            <Template>
+            <AuthTemplate>
                 <div className="text-center py-20">
                     <h2 className="text-xl font-bold text-gray-700">
                         Não foi possível carregar o relatório.
                     </h2>
                 </div>
-            </Template>
+            </AuthTemplate>
         );
     }
 

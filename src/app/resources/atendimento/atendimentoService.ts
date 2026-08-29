@@ -1,6 +1,5 @@
 import { api } from "../axios.ts/api";
 export interface AtendimentoRequest {
-    usuarioId: number;
     formaPagamento: FormaPagamento;
     observacao?: string;
     servicosIds: number[];

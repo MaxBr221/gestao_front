@@ -95,8 +95,6 @@ interface ServicosRealizado{
                     </div>                  
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-
-                    {/* FATURAMENTO DA SEMANA */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
                         <div className="mb-6">
@@ -157,8 +155,6 @@ interface ServicosRealizado{
                         </div>
                     </div>
 
-
-                    {/* SERVIÇOS REALIZADOS */}
                     <div className="bg-white rounded-2xl shadow-md p-6">
 
                         <div className="mb-6">
