@@ -56,7 +56,6 @@ export const Sidebar: React.FC = () => {
     return (
         <aside className="w-64 min-h-screen shrink-0 bg-[#164E63] text-white flex flex-col">
 
-            {/* LOGO */}
             <div className="px-6 py-7 border-b border-white/10">
 
                 <div className="flex items-center gap-3">
@@ -79,8 +78,6 @@ export const Sidebar: React.FC = () => {
 
             </div>
 
-
-            {/* MENU */}
             <nav className="flex-1 px-4 py-6">
 
                 <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest px-3 mb-3">
@@ -171,37 +168,6 @@ export const Sidebar: React.FC = () => {
                 </div>
 
             </nav>
-
-
-            {/* USUÁRIO */}
-
-            <div className="border-t border-white/10 p-4">
-
-                <div className="flex items-center gap-3">
-
-                    <div className="w-10 h-10 rounded-full bg-[#57C5B6] flex items-center justify-center font-bold">
-                        M
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-
-                        <p className="text-sm font-semibold truncate">
-                            Maxsuel Lima
-                        </p>
-
-                        <p className="text-xs text-white/50">
-                            Proprietário
-                        </p>
-
-                    </div>
-
-                    <button className="text-white/50 hover:text-white">
-                        ⋮
-                    </button>
-
-                </div>
-
-            </div>
 
         </aside>
     );

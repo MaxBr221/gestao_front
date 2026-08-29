@@ -21,6 +21,7 @@ class PropriAuth{
                 nome: decodeToken.name,
                 login: decodeToken.sub,
                 token: token.token,
+                tenantId: decodeToken.tenantId,
                 expiracao: decodeToken.exp
             }
             console.log("SESSÃO SALVA:", userSessionToken);

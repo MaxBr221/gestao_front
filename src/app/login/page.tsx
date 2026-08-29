@@ -11,6 +11,7 @@ import { FieldError } from "../components/FieldError";
 import { useFormik } from "formik";
 import { useRouter } from 'next/navigation';
 import { notification } from '../components/notification'
+import Link from "next/link";
 
 
 export default function LoginPage() {
@@ -81,6 +82,14 @@ export default function LoginPage() {
                                 onChange={handleChange}
                                 placeholder="Digite sua Senha"/>
                                 < FieldError   error ={errors.senha}/>
+                               <div className="text-right mt-2 px-16">
+                                    <Link
+                                        href="/senha"
+                                        className="text-sm text-[#1A5F7A] hover:underline"
+                                    >
+                                        Esqueci minha senha
+                                    </Link>
+                                </div>
                         </div>
                         <div> 
                             <Button 

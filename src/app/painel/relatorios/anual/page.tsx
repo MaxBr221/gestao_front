@@ -1,5 +1,4 @@
 'use client'
-
 import { Template } from "../../../components/Template";
 import { useEffect, useState } from "react";
 import { buscarRelatorioAnual } from "../../../resources/relatorio/relatorioService";
@@ -108,26 +107,6 @@ export default function RelatorioAnualPage() {
                     />
 
                 </div>
-
-                {relatorio.quantAtendimentos === 0 && (
-
-                    <div className="mt-8 max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-8 text-center border border-gray-100">
-
-                        <div className="text-5xl mb-4">
-                            📊
-                        </div>
-
-                        <h2 className="text-xl font-bold text-gray-700">
-                            Nenhum atendimento registrado neste ano
-                        </h2>
-
-                        <p className="text-gray-500 mt-2">
-                            Os dados aparecerão aqui conforme os atendimentos forem registrados.
-                        </p>
-
-                    </div>
-
-                )}
 
             </div>
 

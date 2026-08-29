@@ -19,5 +19,6 @@ export interface ProprietarioSessaoToken{
     nome?: string;
     login?: string;
     token?: string;
+    tenantId?: number
     expiracao?: number;
 }
