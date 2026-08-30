@@ -1,5 +1,4 @@
 'use client'
-import { Template } from "../components/Template";
 import { PainelLayout } from "../components/PainelLayout";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

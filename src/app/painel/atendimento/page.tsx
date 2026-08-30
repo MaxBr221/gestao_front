@@ -1,14 +1,11 @@
 'use client'
-import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import { AtendimentoRequest, cadastrarAtendimento } from "../..//resources/atendimento/atendimentoService"
+import { AtendimentoRequest, cadastrarAtendimento } from "../../resources/atendimento/atendimentoService"
 import { ServicoResponse, buscarServicos } from "../../resources/servico/servicoService"
 import { notification } from "../../components/notification/index";
 import { PainelLayout } from "../../components/PainelLayout";
 
-
 export default function AtendimentoPage(){
-    const router = useRouter()
     const [servicos, setServicos] = useState<ServicoResponse[]>([]);
     const [servicosSelecionados, setServicosSelecionados] =
     useState<ServicoResponse[]>([]);
@@ -228,7 +225,6 @@ export default function AtendimentoPage(){
                 </div>
 
             </div>
-
         </PainelLayout>
     )
 }
