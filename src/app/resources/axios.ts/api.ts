@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL:  process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   }
@@ -9,7 +9,7 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
-    // 1. Busca a sessão estruturada que sua classe PropriAuth salvou
+    // 1. Busca a sessão esgtruturada que sua classe PropriAuth salvou
     const sessaoUser = localStorage.getItem("_auth");
     
     if (sessaoUser) {
