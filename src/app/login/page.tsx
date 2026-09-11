@@ -2,7 +2,6 @@
 
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { AuthTemplate } from "../components/Template";
 import { Button } from "../components/Button";
 import { InputText } from "../components/InputText";
@@ -62,9 +61,6 @@ export default function LoginPage() {
                 router.push("/painel");
 
             } catch (error) {
-
-                console.error("Erro ao realizar login:", error);
-
                 notify(
                     "Não foi possível realizar o login.",
                     "error"

@@ -22,16 +22,9 @@ export default function RelatorioAnualPage() {
             try {
 
                 const dados = await buscarRelatorioAnual();
-
-                console.log("Relatório recebido:", dados);
                 setRelatorio(dados);
 
             } catch (error) {
-
-                console.error(
-                    "Erro ao carregar relatório Anual:",
-                    error
-                );
                 notification().notify("Error ao carregar relatorio anual!", "error")
 
             }

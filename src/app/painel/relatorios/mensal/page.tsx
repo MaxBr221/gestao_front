@@ -20,17 +20,9 @@ export default function RelatorioMensalPage() {
             try {
 
                 const dados = await buscarRelatorioMensal();
-
-                console.log("Relatório recebido:", dados);
-
                 setRelatorio(dados);
 
             } catch (error) {
-
-                console.error(
-                    "Erro ao carregar relatório Mensal:",
-                    error
-                );
                 notification().notify("Erro ao carregar relatorio mensal!", "error");
 
             }

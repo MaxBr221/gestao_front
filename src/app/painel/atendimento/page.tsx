@@ -63,7 +63,6 @@ export default function AtendimentoPage(){
                 )
             };
 
-            console.log("Enviando:", dados);
             await cadastrarAtendimento(dados);
              notification().notify(
                 "Atendimento cadastrado com sucesso!",
@@ -71,8 +70,6 @@ export default function AtendimentoPage(){
             );
 
         } catch (error) {
-
-            console.error("Erro ao cadastrar atendimento:", error);
             notification().notify("Não foi possível cadastrar o atendimento.", "error");
         }
     }

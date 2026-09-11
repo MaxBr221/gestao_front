@@ -45,9 +45,6 @@ export function userAuth() {
             return decoded.exp > agora;
 
         } catch (error) {
-
-            console.error("Token inválido:", error);
-
             return false;
         }
     }

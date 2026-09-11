@@ -22,12 +22,9 @@ export default function RelatorioDiarioPage() {
         async function carregar() {
             try {
                 const dados = await buscarRelatorioDiario();
-                console.log("Relatório Diario:", dados);
-
                 setRelatorio(dados);
 
             } catch (error) {
-                console.error("Erro ao carregar relatório diário:", error);
                 notification().notify("Erro ao carregar relatorio diario!", "error")
 
             } finally {

@@ -1,6 +1,4 @@
-import { Credencial, TokenAcesso, Proprietario, ProprietarioSessaoToken } from "./proprietario.resources";
-import axios, { Axios } from "axios";
-import { api } from "../axios.ts/api";
+import { TokenAcesso, ProprietarioSessaoToken } from "./proprietario.resources";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -12,10 +10,8 @@ class PropriAuth{
 
     
     initSession(token: TokenAcesso){
-        console.log("TOKEN RECEBIDO:", token);
         if(token.token){
             const decodeToken: any = jwtDecode (token.token);
-            console.log("TOKEN DECODADO:", decodeToken);
 
             const userSessionToken: ProprietarioSessaoToken = {
                 nome: decodeToken.name,
@@ -24,7 +20,6 @@ class PropriAuth{
                 tenantId: decodeToken.tenantId,
                 expiracao: decodeToken.exp
             }
-            console.log("SESSÃO SALVA:", userSessionToken);
             this.setUserSession(userSessionToken);
         }
     } 
@@ -50,11 +45,9 @@ class PropriAuth{
         try {
             const sessaoUser = localStorage.getItem(PropriAuth.AUTH_PARAM);
             if (!sessaoUser) {
-                console.log("token do getSessioNull: ", sessaoUser);
                 return null;  
             }
             const token: ProprietarioSessaoToken = JSON.parse(sessaoUser);
-            console.log("nome no token: ", token.nome);
             return token;
         } catch (error) {
             console.error("Erro ao buscar token: ", error);
