@@ -90,7 +90,7 @@ export default function PainelPage() {
                 </div>
 
                 {/* Métricas Principais Consolidadas */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
                     {/* Card 1: Faturamento Global */}
                     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
@@ -136,6 +136,22 @@ export default function PainelPage() {
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
                             <span className="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-blue-100">
                                 ✂️ Top Serviço
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Card 4: Saldo Líquido */}
+                    <div className="bg-gradient-to-br from-[#50C4B5] to-[#43B3A5] rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-5 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">💎</span>
+                        </div>
+                        <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Saldo Líquido (Mês)</p>
+                        <h2 className="text-4xl font-black text-white tracking-tight z-10">
+                            R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
+                        </h2>
+                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
+                                ✨ Valor Final
                             </span>
                         </div>
                     </div>
