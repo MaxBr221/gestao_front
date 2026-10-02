@@ -50,7 +50,8 @@ export default function PainelPage() {
                 setDiario(dadosDiario);
                 setSemanal(dadosSemanal);
                 setServico(servicosHoje);
-                setValorFinal({ faturamento: null, despesas: null, resultado: dadosValorFinalMensal });
+                const totalDespesas = despesas ? despesas.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0) : 0;
+                setValorFinal({ faturamento: dadosValorFinalMensal, despesas: totalDespesas, resultado: dadosValorFinalMensal });
 
                 // Pegar as 3 últimas despesas
                 if (despesas && despesas.length > 0) {
