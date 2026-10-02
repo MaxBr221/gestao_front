@@ -226,8 +226,50 @@ export default function ServicoPage(){
                     </div>
                 )}
                 </div>
-                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                    <div className="overflow-x-auto">
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden w-full">
+                    
+                    {/* Visualização Mobile (Cards) */}
+                    <div className="block md:hidden divide-y divide-gray-100">
+                        {servicos.length === 0 ? (
+                            <div className="p-10 text-center text-gray-500">Nenhum serviço cadastrado.</div>
+                        ) : (
+                            servicos.map((servico) => (
+                                <div key={servico.id} className="p-5 hover:bg-gray-50 transition-colors">
+                                    <div className="flex items-start gap-4 mb-3">
+                                        <div className="w-10 h-10 rounded-full bg-[#50C4B5]/10 flex items-center justify-center text-xl shadow-sm flex-shrink-0 mt-1">
+                                            ✂️
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="text-gray-800 font-bold text-lg leading-tight">{servico.nome}</p>
+                                            {servico.descricao && <p className="text-sm text-gray-400 mt-1 line-clamp-2">{servico.descricao}</p>}
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <span className="inline-block bg-[#1A5F7A]/5 text-[#1A5F7A] font-bold px-3 py-1.5 rounded-lg text-lg">
+                                            R$ {Number(servico.preco).toFixed(2)}
+                                        </span>
+                                        <div className="flex gap-2">
+                                            <button 
+                                                onClick={() => handlerEditar(servico)} 
+                                                className="p-2.5 bg-blue-50 text-blue-500 rounded-lg hover:bg-blue-100 transition-all" 
+                                                title="Editar">
+                                                ✏️
+                                            </button>
+                                            <button 
+                                                onClick={() => handlerDeletar(servico.id)} 
+                                                className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-all" 
+                                                title="Deletar">
+                                                🗑️
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    {/* Visualização Desktop (Tabela) */}
+                    <div className="hidden md:block overflow-x-auto">
                         <table className="w-full text-left border-collapse min-w-[600px]">
                             <thead>
                                 <tr className="bg-gray-50/80 text-gray-500 border-b">

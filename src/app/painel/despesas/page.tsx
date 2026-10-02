@@ -154,47 +154,80 @@ export default function DespesasPage() {
                     ) : despesas.length === 0 ? (
                         <div className="p-10 text-center text-gray-500">Nenhuma despesa encontrada neste período.</div>
                     ) : (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse min-w-[700px]">
-                                <thead>
-                                    <tr className="bg-gray-50/80 text-gray-500 border-b">
-                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Data</th>
-                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Descrição</th>
-                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Categoria</th>
-                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Valor</th>
-                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider text-center">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {despesas.map(despesa => (
-                                        <tr key={despesa.id} className="border-b last:border-0 hover:bg-gray-50/50 transition-colors duration-200">
-                                            <td className="p-5 text-gray-600 font-medium whitespace-nowrap">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-gray-400">📅</span>
+                    ) : (
+                        <div className="w-full">
+                            {/* Visualização Mobile (Cards) */}
+                            <div className="block md:hidden divide-y divide-gray-100">
+                                {despesas.map(despesa => (
+                                    <div key={despesa.id} className="p-5 hover:bg-gray-50 transition-colors">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <div className="pr-4">
+                                                <p className="font-bold text-gray-800 text-base">{despesa.descricao}</p>
+                                                <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1 font-medium">
+                                                    <span>📅</span>
                                                     {formatarData(despesa.data)}
                                                 </div>
-                                            </td>
-                                            <td className="p-5 text-gray-800 font-bold">
-                                                {despesa.descricao}
-                                                {despesa.observacao && <p className="text-sm font-normal text-gray-400 mt-1 line-clamp-1">{despesa.observacao}</p>}
-                                            </td>
-                                            <td className="p-5">
-                                                <span className="bg-[#1A5F7A]/5 border border-[#1A5F7A]/10 text-[#1A5F7A] px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap">
-                                                    {categoriasLabel[despesa.categoria] || despesa.categoria}
-                                                </span>
-                                            </td>
-                                            <td className="p-5 font-bold text-[#e53e3e] whitespace-nowrap text-lg">
+                                            </div>
+                                            <button onClick={() => handleDelete(despesa.id)} className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition-all flex-shrink-0">
+                                                🗑️
+                                            </button>
+                                        </div>
+                                        {despesa.observacao && <p className="text-sm text-gray-500 mb-3 line-clamp-1">{despesa.observacao}</p>}
+                                        <div className="flex justify-between items-end mt-4">
+                                            <span className="bg-[#1A5F7A]/5 border border-[#1A5F7A]/10 text-[#1A5F7A] px-2.5 py-1 rounded-md text-xs font-bold">
+                                                {categoriasLabel[despesa.categoria] || despesa.categoria}
+                                            </span>
+                                            <span className="font-black text-[#e53e3e] text-lg">
                                                 R$ {despesa.valor.toFixed(2)}
-                                            </td>
-                                            <td className="p-5 text-center">
-                                                <button onClick={() => handleDelete(despesa.id)} className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 hover:scale-105 transition-all" title="Excluir">
-                                                    🗑️
-                                                </button>
-                                            </td>
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Visualização Desktop (Tabela) */}
+                            <div className="hidden md:block overflow-x-auto">
+                                <table className="w-full text-left border-collapse min-w-[700px]">
+                                    <thead>
+                                        <tr className="bg-gray-50/80 text-gray-500 border-b">
+                                            <th className="p-5 font-semibold text-sm uppercase tracking-wider">Data</th>
+                                            <th className="p-5 font-semibold text-sm uppercase tracking-wider">Descrição</th>
+                                            <th className="p-5 font-semibold text-sm uppercase tracking-wider">Categoria</th>
+                                            <th className="p-5 font-semibold text-sm uppercase tracking-wider">Valor</th>
+                                            <th className="p-5 font-semibold text-sm uppercase tracking-wider text-center">Ações</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {despesas.map(despesa => (
+                                            <tr key={despesa.id} className="border-b last:border-0 hover:bg-gray-50/50 transition-colors duration-200">
+                                                <td className="p-5 text-gray-600 font-medium whitespace-nowrap">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-gray-400">📅</span>
+                                                        {formatarData(despesa.data)}
+                                                    </div>
+                                                </td>
+                                                <td className="p-5 text-gray-800 font-bold">
+                                                    {despesa.descricao}
+                                                    {despesa.observacao && <p className="text-sm font-normal text-gray-400 mt-1 line-clamp-1">{despesa.observacao}</p>}
+                                                </td>
+                                                <td className="p-5">
+                                                    <span className="bg-[#1A5F7A]/5 border border-[#1A5F7A]/10 text-[#1A5F7A] px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap">
+                                                        {categoriasLabel[despesa.categoria] || despesa.categoria}
+                                                    </span>
+                                                </td>
+                                                <td className="p-5 font-bold text-[#e53e3e] whitespace-nowrap text-lg">
+                                                    R$ {despesa.valor.toFixed(2)}
+                                                </td>
+                                                <td className="p-5 text-center">
+                                                    <button onClick={() => handleDelete(despesa.id)} className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 hover:scale-105 transition-all" title="Excluir">
+                                                        🗑️
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     )}
                 </div>
