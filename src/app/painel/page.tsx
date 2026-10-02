@@ -2,7 +2,7 @@
 import { PainelLayout } from "../components/PainelLayout";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from "../resources/relatorio/relatorioService";
 import { buscarValorFinalMensal } from "../resources/valorFinal/valorFinalService";
 import { buscarDespesas } from "../resources/despesa/despesaService";
@@ -90,7 +90,7 @@ export default function PainelPage() {
 
                 {/* Métricas Principais Consolidadas */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    
+
                     {/* Card 1: Faturamento Global */}
                     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
                         <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
@@ -141,150 +141,154 @@ export default function PainelPage() {
                 </div>
 
                 {/* Gráficos e Últimas Despesas */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                    <div className="lg:col-span-2 space-y-6">
-                        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col h-full">
-                            <div className="mb-8">
-                                <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
-                                    📈 Faturamento da Semana
-                                </h2>
-                                <p className="text-gray-400 text-sm mt-1">Acompanhe a evolução diária das suas receitas</p>
-                            </div>
-                            <div className="w-full h-[280px]">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart
-                                        data={semanal}
-                                        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                                    >
-                                        <defs>
-                                            <linearGradient id="colorFaturamento" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#50C4B5" stopOpacity={0.9}/>
-                                                <stop offset="95%" stopColor="#1A5F7A" stopOpacity={0.9}/>
-                                            </linearGradient>
-                                        </defs>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                        <XAxis
-                                            dataKey="dia"
-                                            tickFormatter={(dia) => diasSemana[dia]}
-                                            tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
-                                            axisLine={false}
-                                            tickLine={false}
-                                            dy={10}
-                                        />
-                                        <YAxis
-                                            domain={[0, "auto"]}
-                                            allowDecimals={false}
-                                            tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
-                                            axisLine={false}
-                                            tickLine={false}
-                                        />
-                                        <Tooltip
-                                            cursor={{ fill: '#f9fafb' }}
-                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold', color: '#1f2937' }}
-                                            formatter={(value) => [`R$ ${value}`, "Faturamento"]}
-                                            labelFormatter={(dia) => diasSemana[dia as number] || dia}
-                                        />
-                                        <Bar
-                                            dataKey="faturamento"
-                                            fill="url(#colorFaturamento)"
-                                            radius={[6, 6, 0, 0]}
-                                            barSize={40}
-                                        />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-                    </div>
-
-                        <div className="lg:col-span-1 space-y-6">
-                            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col">
-                                <div className="mb-6">
-                                    <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
-                                        💸 Últimas Despesas
-                                    </h2>
-                                    <p className="text-gray-400 text-sm mt-1">As despesas mais recentes registradas</p>
+                {/* Definindo cores para o gráfico de rosca */}
+                {(() => {
+                    const COLORS = ['#50C4B5', '#1A5F7A', '#F59E0B', '#3B82F6', '#EC4899', '#8B5CF6'];
+                    return (
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                            <div className="lg:col-span-2 space-y-6">
+                                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col h-full">
+                                    <div className="mb-8">
+                                        <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
+                                            📈 Faturamento da Semana
+                                        </h2>
+                                        <p className="text-gray-400 text-sm mt-1">Acompanhe a evolução diária das suas receitas</p>
+                                    </div>
+                                    <div className="w-full h-[280px]">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <AreaChart
+                                                data={semanal}
+                                                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                                            >
+                                                <defs>
+                                                    <linearGradient id="colorFaturamento" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="5%" stopColor="#50C4B5" stopOpacity={0.4}/>
+                                                        <stop offset="95%" stopColor="#50C4B5" stopOpacity={0}/>
+                                                    </linearGradient>
+                                                </defs>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                                                <XAxis
+                                                    dataKey="dia"
+                                                    tickFormatter={(dia) => diasSemana[dia]}
+                                                    tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    dy={10}
+                                                />
+                                                <YAxis
+                                                    domain={[0, "auto"]}
+                                                    allowDecimals={false}
+                                                    tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                />
+                                                <Tooltip
+                                                    cursor={{ stroke: '#50C4B5', strokeWidth: 1, strokeDasharray: '5 5' }}
+                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold', color: '#1f2937' }}
+                                                    formatter={(value) => [`R$ ${value}`, "Faturamento"]}
+                                                    labelFormatter={(dia) => diasSemana[dia as number] || dia}
+                                                />
+                                                <Area
+                                                    type="monotone"
+                                                    dataKey="faturamento"
+                                                    stroke="#50C4B5"
+                                                    strokeWidth={4}
+                                                    fillOpacity={1}
+                                                    fill="url(#colorFaturamento)"
+                                                    activeDot={{ r: 6, fill: '#1A5F7A', stroke: '#fff', strokeWidth: 2 }}
+                                                />
+                                            </AreaChart>
+                                        </ResponsiveContainer>
+                                    </div>
                                 </div>
+                            </div>
 
-                                {ultimasDespesas.length > 0 ? (
-                                    <div className="space-y-4">
-                                        {ultimasDespesas.map(desp => (
-                                            <div key={desp.id} className="flex justify-between items-center border-b border-gray-50 pb-3 last:border-0 last:pb-0 hover:bg-gray-50/80 p-3 -mx-3 rounded-xl transition-colors">
-                                                <div>
-                                                    <p className="font-bold text-gray-700 text-sm">{desp.descricao}</p>
-                                                    <p className="text-xs text-gray-400 mt-0.5 font-medium">{formatarData(desp.data)}</p>
+                            <div className="lg:col-span-1 space-y-6">
+                                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col">
+                                    <div className="mb-6">
+                                        <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
+                                            💸 Últimas Despesas
+                                        </h2>
+                                        <p className="text-gray-400 text-sm mt-1">As despesas mais recentes registradas</p>
+                                    </div>
+
+                                    {ultimasDespesas.length > 0 ? (
+                                        <div className="space-y-4">
+                                            {ultimasDespesas.map(desp => (
+                                                <div key={desp.id} className="flex justify-between items-center border-b border-gray-50 pb-3 last:border-0 last:pb-0 hover:bg-gray-50/80 p-3 -mx-3 rounded-xl transition-colors">
+                                                    <div>
+                                                        <p className="font-bold text-gray-700 text-sm">{desp.descricao}</p>
+                                                        <p className="text-xs text-gray-400 mt-0.5 font-medium">{formatarData(desp.data)}</p>
+                                                    </div>
+                                                    <span className="font-bold text-[#e53e3e] text-sm whitespace-nowrap bg-red-50 px-2 py-1 rounded-lg">
+                                                        - R$ {desp.valor.toFixed(2)}
+                                                    </span>
                                                 </div>
-                                                <span className="font-bold text-[#e53e3e] text-sm whitespace-nowrap bg-red-50 px-2 py-1 rounded-lg">
-                                                    - R$ {desp.valor.toFixed(2)}
-                                                </span>
-                                            </div>
-                                        ))}
-                                        <Link href="/painel/despesas" className="block text-center text-[#50C4B5] font-bold text-sm hover:text-[#43B3A5] transition-colors mt-6 pt-2 border-t border-gray-50">
-                                            Ver todas as despesas &rarr;
-                                        </Link>
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-8">
-                                        <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🍃</div>
-                                        <p className="text-gray-400 text-sm font-medium">Nenhuma despesa registrada.</p>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col">
-                                <div className="mb-6">
-                                    <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
-                                        ✂️ Serviços Hoje
-                                    </h2>
-                                    <p className="text-gray-400 text-sm mt-1">Quantidade por tipo de serviço</p>
+                                            ))}
+                                            <Link href="/painel/despesas" className="block text-center text-[#50C4B5] font-bold text-sm hover:text-[#43B3A5] transition-colors mt-6 pt-2 border-t border-gray-50">
+                                                Ver todas as despesas &rarr;
+                                            </Link>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-8">
+                                            <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🍃</div>
+                                            <p className="text-gray-400 text-sm font-medium">Nenhuma despesa registrada.</p>
+                                        </div>
+                                    )}
                                 </div>
 
-                                <div className="w-full h-[260px]">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart
-                                            data={servico}
-                                            layout="vertical"
-                                            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                                        >
-                                            <defs>
-                                                <linearGradient id="colorServico" x1="0" y1="0" x2="1" y2="0">
-                                                    <stop offset="5%" stopColor="#1A5F7A" stopOpacity={0.8}/>
-                                                    <stop offset="95%" stopColor="#50C4B5" stopOpacity={1}/>
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
-                                            <XAxis 
-                                                type="number" 
-                                                allowDecimals={false} 
-                                                tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
-                                                axisLine={false}
-                                                tickLine={false}
-                                            />
-                                            <YAxis 
-                                                type="category" 
-                                                dataKey="nome" 
-                                                width={90} 
-                                                tick={{ fontSize: 12, fill: "#4B5563", fontWeight: 600 }}
-                                                axisLine={false}
-                                                tickLine={false}
-                                            />
-                                            <Tooltip 
-                                                cursor={{ fill: '#f9fafb' }}
-                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
-                                                formatter={(value) => [`${value}`, "Quantidade"]} 
-                                            />
-                                            <Bar 
-                                                dataKey="quantidade" 
-                                                fill="url(#colorServico)" 
-                                                radius={[0, 6, 6, 0]}
-                                                barSize={32}
-                                            />
-                                        </BarChart>
-                                    </ResponsiveContainer>
+                                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col">
+                                    <div className="mb-6">
+                                        <h2 className="text-gray-800 font-bold text-lg flex items-center gap-2">
+                                            ✂️ Serviços Hoje
+                                        </h2>
+                                        <p className="text-gray-400 text-sm mt-1">Quantidade por tipo de serviço</p>
+                                    </div>
+
+                                    <div className="w-full h-[260px] relative">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <PieChart>
+                                                <Pie
+                                                    data={servico}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    innerRadius={65}
+                                                    outerRadius={95}
+                                                    paddingAngle={5}
+                                                    dataKey="quantidade"
+                                                    nameKey="nome"
+                                                    stroke="none"
+                                                >
+                                                    {servico.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                    ))}
+                                                </Pie>
+                                                <Tooltip 
+                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
+                                                    formatter={(value, name) => [`${value} atendimentos`, name]} 
+                                                />
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                        
+                                        {/* Indicadores de Cor */}
+                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                                            <span className="text-3xl">🎯</span>
+                                        </div>
+                                        <div className="flex flex-wrap justify-center gap-3 mt-2 pb-2">
+                                            {servico.map((entry, index) => (
+                                                <div key={index} className="flex items-center gap-1.5 text-xs text-gray-600 font-medium">
+                                                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></span>
+                                                    {entry.nome.split(' ')[0]}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    );
+                })()}
+            </div>
 
         </PainelLayout>
     );
