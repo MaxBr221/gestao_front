@@ -53,7 +53,8 @@ export default function PainelPage() {
                 const totalDespesas = despesas ? despesas.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0) : 0;
                 
                 // O lucro real (Saldo Líquido) é o Faturamento Mensal subtraído das Despesas Totais
-                const faturamentoMensal = dadosValorFinalMensal || 0;
+                // Se o backend retornar 0 no mensal, fazemos o fallback temporário para o diário para não zerar
+                const faturamentoMensal = dadosValorFinalMensal || dadosDiario?.faturamento || 0;
                 const lucroLiquido = faturamentoMensal - totalDespesas;
 
                 setValorFinal({ faturamento: faturamentoMensal, despesas: totalDespesas, resultado: lucroLiquido });
