@@ -112,35 +112,33 @@ export default function AtendimentoPage(){
                                 return (
                                     <div
                                         key={servico.id}
-                                        className="flex items-center justify-between
-                                        border rounded-xl p-4 hover:bg-gray-50 transition"
+                                        className={`flex items-center justify-between border-2 rounded-xl p-4 transition-all duration-200 cursor-pointer ${
+                                            selecionado ? 'border-[#50C4B5] bg-[#50C4B5]/5' : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+                                        }`}
+                                        onClick={() => selecionarServico(servico)}
                                     >
-
-                                        <div className="flex items-center gap-3">
-
-                                            <input
-                                                type="checkbox"
-                                                checked={selecionado}
-                                                onChange={() => selecionarServico(servico)}
-                                                className="w-5 h-5 accent-[#50C4B5]"
-                                            />
-
-                                            <div>
-                                                <p className="font-bold text-gray-700">
-                                                    {servico.nome}
-                                                </p>
-
-                                                <p className="text-sm text-gray-400">
-                                                    {servico.descricao}
-                                                </p>
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-6 h-6 rounded-md flex items-center justify-center border-2 transition-colors ${
+                                                selecionado ? 'bg-[#50C4B5] border-[#50C4B5]' : 'border-gray-300 bg-white'
+                                            }`}>
+                                                {selecionado && <span className="text-white text-sm">✓</span>}
                                             </div>
 
+                                            <div>
+                                                <p className={`font-bold ${selecionado ? 'text-[#1A5F7A]' : 'text-gray-700'}`}>
+                                                    {servico.nome}
+                                                </p>
+                                                {servico.descricao && (
+                                                    <p className="text-sm text-gray-400 mt-0.5 line-clamp-1">
+                                                        {servico.descricao}
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
 
-                                        <span className="font-bold text-[#1A5F7A]">
-                                            R$ {servico.preco}
+                                        <span className={`font-bold whitespace-nowrap ${selecionado ? 'text-[#50C4B5]' : 'text-gray-600'}`}>
+                                            R$ {Number(servico.preco).toFixed(2)}
                                         </span>
-
                                     </div>
                                 );
                             })}
@@ -209,12 +207,12 @@ export default function AtendimentoPage(){
                         <button
                             type="button"
                             className="w-full mt-6 bg-[#50C4B5] text-white
-                            font-bold py-3 rounded-xl hover:bg-[#43B3A5]
-                            transition"
+                            font-bold py-4 rounded-xl hover:bg-[#43B3A5]
+                            transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg text-lg"
                             onClick={cadastroAtendimento}
                             
                         >
-                            Registrar Atendimento
+                            Confirmar Atendimento
                         </button>
 
                     </div>

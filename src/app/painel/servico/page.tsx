@@ -96,16 +96,17 @@ export default function ServicoPage(){
 
     return(
         <PainelLayout>
-            <div className="w-full max-w-6xl mx-auto px-6 py-10">
-                 <div className="flex items-center justify-between mb-10">
+            <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-10 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-[#1A5F7A]">
-                            ✂️ Servicos 
+                            ✂️ Serviços 
                         </h1>
+                        <p className="text-gray-500 mt-2">Gerencie os serviços oferecidos na sua barbearia.</p>
                     </div>
                     <div>
                         <Button
-                            style="bg-green-500 text-white font-bold px-5 py-3 rounded-xl  shadow-md transition hover:bg-green-400 "
+                            style="bg-[#50C4B5] text-white font-bold px-6 py-3 rounded-xl shadow-md hover:bg-[#43B3A5] hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto"
                             type="button"
                             label="+ Novo Serviço"
                             onClick={() => setModal(true)}>
@@ -225,39 +226,64 @@ export default function ServicoPage(){
                     </div>
                 )}
                 </div>
-                <div className="bg-white rounded-2xl shadow-md overflow-hidden">
-                    <div className="grid grid-cols-3 px-6 py-4 border-b bg-gray-50">
-                        <span className="font-bold text-xl text-gray-500">
-                            Serviço
-                        </span>
-
-                        <span className="font-bold text-xl text-gray-500">
-                            Preço
-                        </span>
-
-                        <span className="font-bold text-xl text-gray-500 text-right">
-                            Ações
-                        </span>
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr className="bg-gray-50/80 text-gray-500 border-b">
+                                    <th className="p-5 font-semibold text-sm uppercase tracking-wider">Serviço</th>
+                                    <th className="p-5 font-semibold text-sm uppercase tracking-wider">Preço</th>
+                                    <th className="p-5 font-semibold text-sm uppercase tracking-wider text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {servicos.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={3} className="p-10 text-center text-gray-500">
+                                            Nenhum serviço cadastrado.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    servicos.map((servico) => (
+                                        <tr key={servico.id} className="border-b last:border-0 hover:bg-gray-50/50 transition-colors duration-200">
+                                            <td className="p-5">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-full bg-[#50C4B5]/10 flex items-center justify-center text-xl shadow-sm">
+                                                        ✂️
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-gray-800 font-bold text-lg">{servico.nome}</p>
+                                                        {servico.descricao && <p className="text-sm text-gray-400 mt-1 line-clamp-1">{servico.descricao}</p>}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="p-5">
+                                                <span className="inline-block bg-[#1A5F7A]/5 text-[#1A5F7A] font-bold px-3 py-1 rounded-lg">
+                                                    R$ {Number(servico.preco).toFixed(2)}
+                                                </span>
+                                            </td>
+                                            <td className="p-5 text-right">
+                                                <div className="flex justify-end gap-2">
+                                                    <button 
+                                                        onClick={() => handlerEditar(servico)} 
+                                                        className="p-2 bg-blue-50 text-blue-500 rounded-lg hover:bg-blue-100 hover:scale-105 transition-all" 
+                                                        title="Editar">
+                                                        ✏️
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => handlerDeletar(servico.id)} 
+                                                        className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 hover:scale-105 transition-all" 
+                                                        title="Deletar">
+                                                        🗑️
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                {servicos.map((servico) =>(
-                       <div
-                            key={servico.id}
-                            className="grid grid-cols-3 px-6 py-5 border-b"
-                        >
-                            <span className="text-gray-600 text-xl font-bold">
-                                ✂️ {servico.nome}
-                            </span>
-
-                            <span className="text-gray-600 text-xl font-bold">
-                                R$ {servico.preco}
-                            </span>
-
-                            <div className="flex justify-end gap-3">
-                                <button onClick={() => handlerEditar(servico)}>✏️</button>
-                                <button onClick={() => handlerDeletar(servico.id)}>🗑️</button>
-                            </div>
-                        </div>
-                 ))}
                  </div>
             </div>
         </PainelLayout>

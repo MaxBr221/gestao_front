@@ -96,13 +96,13 @@ export default function DespesasPage() {
 
     return (
         <PainelLayout>
-            <div className="w-full max-w-6xl mx-auto px-6 py-10">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-[#1A5F7A]">Despesas</h1>
-                        <p className="text-gray-500 mt-2">Gerencie as despesas da sua barbearia.</p>
+                        <p className="text-gray-500 mt-2">Gerencie as despesas financeiras da sua barbearia.</p>
                     </div>
-                    <Link href="/painel/despesas/nova" className="bg-[#50C4B5] text-white font-bold py-2 px-6 rounded-xl hover:bg-[#43B3A5] transition">
+                    <Link href="/painel/despesas/nova" className="w-full sm:w-auto bg-[#50C4B5] text-white text-center font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg hover:bg-[#43B3A5] transition-all duration-300 transform hover:-translate-y-1">
                         + Nova Despesa
                     </Link>
                 </div>
@@ -131,50 +131,53 @@ export default function DespesasPage() {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
                     <p className="text-gray-500 font-bold mb-2">Total de despesas no período</p>
-                    <h2 className="text-3xl font-black text-[#e53e3e]">
+                    <h2 className="text-4xl font-black text-[#e53e3e]">
                         R$ {total.toFixed(2)}
                     </h2>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                     {loading ? (
                         <div className="p-10 text-center text-gray-500">Carregando despesas...</div>
                     ) : despesas.length === 0 ? (
                         <div className="p-10 text-center text-gray-500">Nenhuma despesa encontrada neste período.</div>
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
+                            <table className="w-full text-left border-collapse min-w-[700px]">
                                 <thead>
-                                    <tr className="bg-gray-50 text-gray-500 border-b">
-                                        <th className="p-4 font-semibold text-sm">Data</th>
-                                        <th className="p-4 font-semibold text-sm">Descrição</th>
-                                        <th className="p-4 font-semibold text-sm">Categoria</th>
-                                        <th className="p-4 font-semibold text-sm">Valor</th>
-                                        <th className="p-4 font-semibold text-sm text-center">Ações</th>
+                                    <tr className="bg-gray-50/80 text-gray-500 border-b">
+                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Data</th>
+                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Descrição</th>
+                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Categoria</th>
+                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider">Valor</th>
+                                        <th className="p-5 font-semibold text-sm uppercase tracking-wider text-center">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {despesas.map(despesa => (
-                                        <tr key={despesa.id} className="border-b hover:bg-gray-50 transition">
-                                            <td className="p-4 text-gray-600 text-sm whitespace-nowrap">
-                                                {formatarData(despesa.data)}
+                                        <tr key={despesa.id} className="border-b last:border-0 hover:bg-gray-50/50 transition-colors duration-200">
+                                            <td className="p-5 text-gray-600 font-medium whitespace-nowrap">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-gray-400">📅</span>
+                                                    {formatarData(despesa.data)}
+                                                </div>
                                             </td>
-                                            <td className="p-4 text-gray-800 font-medium">
+                                            <td className="p-5 text-gray-800 font-bold">
                                                 {despesa.descricao}
-                                                {despesa.observacao && <p className="text-xs text-gray-400 mt-1">{despesa.observacao}</p>}
+                                                {despesa.observacao && <p className="text-sm font-normal text-gray-400 mt-1 line-clamp-1">{despesa.observacao}</p>}
                                             </td>
-                                            <td className="p-4">
-                                                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold">
+                                            <td className="p-5">
+                                                <span className="bg-[#1A5F7A]/5 border border-[#1A5F7A]/10 text-[#1A5F7A] px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap">
                                                     {categoriasLabel[despesa.categoria] || despesa.categoria}
                                                 </span>
                                             </td>
-                                            <td className="p-4 font-bold text-[#e53e3e] whitespace-nowrap">
+                                            <td className="p-5 font-bold text-[#e53e3e] whitespace-nowrap text-lg">
                                                 R$ {despesa.valor.toFixed(2)}
                                             </td>
-                                            <td className="p-4 text-center">
-                                                <button onClick={() => handleDelete(despesa.id)} className="text-red-400 hover:text-red-600 transition" title="Excluir">
+                                            <td className="p-5 text-center">
+                                                <button onClick={() => handleDelete(despesa.id)} className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 hover:scale-105 transition-all" title="Excluir">
                                                     🗑️
                                                 </button>
                                             </td>

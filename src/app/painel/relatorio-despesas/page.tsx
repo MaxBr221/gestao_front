@@ -76,20 +76,20 @@ export default function RelatorioDespesasPage() {
 
     return (
         <PainelLayout>
-            <div className="w-full max-w-6xl mx-auto px-6 py-10">
+            <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-[#1A5F7A]">Relatório de Despesas</h1>
-                    <p className="text-gray-500 mt-2">Analise seus gastos por categoria.</p>
+                    <p className="text-gray-500 mt-2">Analise seus gastos por categoria financeira.</p>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-                    <div className="flex items-center gap-4">
-                        <label className="text-gray-600 font-medium">Período:</label>
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <label className="text-gray-700 font-bold whitespace-nowrap">Selecione o Período:</label>
                         <input 
                             type="month" 
                             value={mesAno}
                             onChange={(e) => setMesAno(e.target.value)}
-                            className="border rounded-xl p-2 outline-none focus:border-[#50C4B5] text-gray-700"
+                            className="w-full sm:w-auto border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#50C4B5]/50 focus:border-[#50C4B5] transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium"
                         />
                     </div>
                 </div>
@@ -101,21 +101,21 @@ export default function RelatorioDespesasPage() {
                 ) : despesasFiltradas ? (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-1 space-y-6">
-                            <div className="bg-white rounded-2xl shadow-md p-6">
-                                <p className="text-gray-500 font-bold">Total Gasto</p>
-                                <h2 className="text-3xl font-black text-[#e53e3e] mt-2">
+                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transform transition-all hover:scale-[1.02]">
+                                <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">Total Gasto</p>
+                                <h2 className="text-4xl font-black text-[#e53e3e] mt-2">
                                     R$ {calcularTotal().toFixed(2)}
                                 </h2>
                             </div>
                             
-                            <div className="bg-white rounded-2xl shadow-md p-6">
-                                <p className="text-gray-500 font-bold">Registros de Despesa</p>
-                                <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
+                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transform transition-all hover:scale-[1.02]">
+                                <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">Registros de Despesa</p>
+                                <h2 className="text-4xl font-black text-[#1A5F7A] mt-2">
                                     {despesasFiltradas.length}
                                 </h2>
                             </div>
                             
-                            <div className="bg-white rounded-2xl shadow-md p-6">
+                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                                 <h3 className="text-lg font-bold text-[#1A5F7A] mb-4">Por Categoria</h3>
                                 <div className="space-y-3">
                                     {despesasFiltradas.length === 0 ? (
@@ -134,7 +134,7 @@ export default function RelatorioDespesasPage() {
                             </div>
                         </div>
 
-                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-md p-6">
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                             <h3 className="text-lg font-bold text-[#1A5F7A] mb-6">Distribuição de Despesas ({periodoStr})</h3>
                             <div className="w-full h-[400px] flex items-center justify-center">
                                 {prepararDadosGrafico().length > 0 ? (
