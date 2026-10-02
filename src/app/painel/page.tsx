@@ -247,33 +247,35 @@ export default function PainelPage() {
 
                                     <div className="w-full flex flex-col items-center">
                                         <div className="w-full h-[220px] relative">
-                                            <ResponsiveContainer width="100%" height="100%">
-                                                <PieChart>
-                                                    <Pie
-                                                        data={servico}
-                                                        cx="50%"
-                                                        cy="50%"
-                                                        innerRadius={65}
-                                                        outerRadius={95}
-                                                        paddingAngle={5}
-                                                        dataKey="quantidade"
-                                                        nameKey="nome"
-                                                        stroke="none"
-                                                    >
-                                                        {servico.map((entry, index) => (
-                                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                                        ))}
-                                                    </Pie>
-                                                    <Tooltip 
-                                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
-                                                        formatter={(value, name) => [`${value} atendimentos`, name]} 
-                                                    />
-                                                </PieChart>
-                                            </ResponsiveContainer>
+                                            {/* Ícone Central - Z-index baixo para ficar atrás do Tooltip */}
+                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0">
+                                                <span className="text-3xl opacity-80">🎯</span>
+                                            </div>
                                             
-                                            {/* Indicadores de Cor */}
-                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                                                <span className="text-3xl">🎯</span>
+                                            <div className="w-full h-full relative z-10">
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                    <PieChart>
+                                                        <Pie
+                                                            data={servico}
+                                                            cx="50%"
+                                                            cy="50%"
+                                                            innerRadius={65}
+                                                            outerRadius={95}
+                                                            paddingAngle={5}
+                                                            dataKey="quantidade"
+                                                            nameKey="nome"
+                                                            stroke="none"
+                                                        >
+                                                            {servico.map((entry, index) => (
+                                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                            ))}
+                                                        </Pie>
+                                                        <Tooltip 
+                                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
+                                                            formatter={(value, name) => [`${value} atendimentos`, name]} 
+                                                        />
+                                                    </PieChart>
+                                                </ResponsiveContainer>
                                             </div>
                                         </div>
 
