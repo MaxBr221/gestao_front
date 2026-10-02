@@ -88,53 +88,70 @@ export default function PainelPage() {
                     </Link>
                 </div>
 
-                {/* Resumo Financeiro */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 border-l-4 border-l-green-500 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">💰 Faturamento Global</p>
-                        <h2 className="text-4xl font-black text-gray-800 mt-2">
-                            R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
-                        </h2>
-                    </div>
+                {/* Seção 1: Resumo de Hoje */}
+                <div className="mb-8">
+                    <h2 className="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
+                        <span>☀️</span> Resumo de Hoje
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-gradient-to-br from-[#1A5F7A] to-[#227B9E] text-white rounded-2xl shadow-lg p-5 transform transition-all hover:-translate-y-1">
+                            <p className="text-white/80 font-semibold uppercase tracking-wider text-xs">Faturamento Hoje</p>
+                            <h2 className="text-3xl font-black mt-1">
+                                R$ {diario?.faturamento ?? "0,00"}
+                            </h2>
+                        </div>
 
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 border-l-4 border-l-red-500 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">📉 Despesas Totais</p>
-                        <h2 className="text-4xl font-black text-[#e53e3e] mt-2">
-                            R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
-                        </h2>
-                    </div>
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex flex-col justify-center">
+                            <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Atendimentos Hoje</p>
+                            <h2 className="text-3xl font-black text-[#1A5F7A] mt-1">
+                                {diario?.quantAtendimentos ?? 0}
+                            </h2>
+                        </div>
 
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 border-l-4 border-l-blue-500 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">🏆 Resultado Financeiro</p>
-                        <h2 className="text-4xl font-black text-[#1A5F7A] mt-2">
-                            R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
-                        </h2>
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex flex-col justify-center">
+                            <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Mais realizado (Hoje)</p>
+                            <h2 className="text-2xl font-black text-[#50C4B5] mt-1 line-clamp-1">
+                                {diario?.servicoMaiorFrequencia ?? "Nenhum"}
+                            </h2>
+                        </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">💰 Faturamento Hoje</p>
-                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            R$ {diario?.faturamento ?? "0,00"}
-                        </h2>
-                        <p className="text-sm text-gray-400 mt-2 font-medium">Total faturado no dia atual</p>
-                    </div>
+                {/* Seção 2: Balanço Global */}
+                <div className="mb-8">
+                    <h2 className="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
+                        <span>🌎</span> Balanço Global
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
+                            <div>
+                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Faturamento Global</p>
+                                <h2 className="text-2xl font-black text-gray-800 mt-1">
+                                    R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
+                                </h2>
+                            </div>
+                            <div className="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-xl">📈</div>
+                        </div>
 
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">✂️ Atendimentos Hoje</p>
-                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2">
-                            {diario?.quantAtendimentos ?? 0}
-                        </h2>
-                        <p className="text-sm text-gray-400 mt-2 font-medium">Total de atendimentos hoje</p>
-                    </div>
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
+                            <div>
+                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Despesas Totais</p>
+                                <h2 className="text-2xl font-black text-[#e53e3e] mt-1">
+                                    R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
+                                </h2>
+                            </div>
+                            <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl">📉</div>
+                        </div>
 
-                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 transform transition-all hover:scale-[1.02] cursor-default">
-                        <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">🏆 Mais realizados</p>
-                        <h2 className="text-3xl font-black text-[#1A5F7A] mt-2 line-clamp-1">
-                            {diario?.servicoMaiorFrequencia ?? "Nenhum"}
-                        </h2>
-                        <p className="text-sm text-gray-400 mt-2 font-medium">Serviço mais popular de hoje</p>
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
+                            <div>
+                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Resultado Financeiro</p>
+                                <h2 className="text-2xl font-black text-[#50C4B5] mt-1">
+                                    R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
+                                </h2>
+                            </div>
+                            <div className="w-12 h-12 bg-blue-50 text-[#1A5F7A] rounded-full flex items-center justify-center text-xl">💰</div>
+                        </div>
                     </div>
                 </div>
 

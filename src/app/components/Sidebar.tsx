@@ -39,19 +39,9 @@ const menuPrincipal: MenuItem[] = [
 
 const menuRelatorios: MenuItem[] = [
     {
-        label: "Relatório Diário",
-        href: "/painel/relatorios/diario",
-        icon: "📅"
-    },
-    {
-        label: "Relatório Mensal",
-        href: "/painel/relatorios/mensal",
+        label: "Relatório Faturamento",
+        href: "/painel/relatorios",
         icon: "📊"
-    },
-    {
-        label: "Relatório Anual",
-        href: "/painel/relatorios/anual",
-        icon: "📈"
     },
     {
         label: "Relatório Despesas",
