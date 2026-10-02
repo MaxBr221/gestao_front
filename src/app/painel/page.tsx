@@ -191,8 +191,8 @@ interface ServicosRealizado{
                                         radius={[8, 8, 0, 0]}
                                     />
                                 </BarChart>
-                            </ResponsiveContainer>
                         </div>
+                    </div>
                     </div>
 
                     <div className="lg:col-span-1 space-y-6">
