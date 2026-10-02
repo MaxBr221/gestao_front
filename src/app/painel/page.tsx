@@ -6,7 +6,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from "../resources/relatorio/relatorioService";
 import { buscarValorFinalMensal } from "../resources/valorFinal/valorFinalService";
 import { buscarDespesas } from "../resources/despesa/despesaService";
-import { format } from "date-fns"; // Se não tiver date-fns, vou formatar manualmente
 import Link from "next/link";
 
 export default function PainelPage() {
