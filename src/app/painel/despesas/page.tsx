@@ -60,11 +60,9 @@ export default function DespesasPage() {
             // Filtro local
             let filtradas = todasDespesas;
             if (inicio && fim) {
-                const dataIni = new Date(inicio).getTime();
-                const dataFim = new Date(fim).getTime();
                 filtradas = todasDespesas.filter(d => {
-                    const dataDespesa = new Date(d.data).getTime();
-                    return dataDespesa >= dataIni && dataDespesa <= dataFim;
+                    const dataDespesaStr = d.data.split('T')[0];
+                    return dataDespesaStr >= inicio && dataDespesaStr <= fim;
                 });
             }
             
