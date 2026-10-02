@@ -14,6 +14,13 @@ export default function NovaDespesaPage() {
     const [valor, setValor] = useState("");
     const [data, setData] = useState("");
     const [categoria, setCategoria] = useState<CategoriaDespesa | "">("");
+    
+    // Obtém data de hoje no fuso local para bloquear datas futuras
+    const getHojeStr = () => {
+        const d = new Date();
+        const pad = (n: number) => n.toString().padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    };
     const [observacao, setObservacao] = useState("");
 
     const handleSalvar = async (e: React.FormEvent) => {
@@ -88,6 +95,7 @@ export default function NovaDespesaPage() {
                                 <input 
                                     type="date" 
                                     value={data}
+                                    max={getHojeStr()}
                                     onChange={(e) => setData(e.target.value)}
                                     className="w-full border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#50C4B5]/50 focus:border-[#50C4B5] transition-all bg-gray-50 focus:bg-white text-gray-800"
                                 />
