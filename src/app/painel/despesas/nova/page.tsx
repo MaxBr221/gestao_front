@@ -19,15 +19,18 @@ export default function NovaDespesaPage() {
     const handleSalvar = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!descricao || !valor || !data || !categoria) {
-            notification().notify("Preencha todos os campos obrigatórios.", "info");
+        if (!valor || !data || !categoria) {
+            notification().notify("Preencha o Valor, Data e Categoria.", "info");
             return;
         }
 
         setLoading(true);
         try {
+            // Se a descrição estiver vazia, usamos o nome da categoria como descrição padrão
+            const descricaoFinal = descricao.trim() ? descricao : categoriasLabel[categoria as CategoriaDespesa];
+
             const payload: DespesaRequest = {
-                descricao,
+                descricao: descricaoFinal,
                 valor: Number(valor),
                 data,
                 categoria: categoria as CategoriaDespesa,
@@ -57,7 +60,7 @@ export default function NovaDespesaPage() {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Descrição *</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Descrição <span className="text-gray-400 font-normal text-xs">(Opcional)</span></label>
                                 <input 
                                     type="text" 
                                     value={descricao}
