@@ -3,8 +3,7 @@ import { PainelLayout } from "../components/PainelLayout";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje } from "../resources/relatorio/relatorioService";
-import { buscarValorFinalMensal } from "../resources/valorFinal/valorFinalService";
+import { buscarRelatorioDiario, buscarRelatorioSemanal, servicosDeHoje, buscarRelatorioMensal } from "../resources/relatorio/relatorioService";
 import { buscarDespesas } from "../resources/despesa/despesaService";
 import Link from "next/link";
 
@@ -44,7 +43,7 @@ export default function PainelPage() {
                 const servicosHoje = await servicosDeHoje();
 
                 // Novos endpoints
-                const dadosValorFinalMensal = await buscarValorFinalMensal().catch(() => null);
+                const dadosRelatorioMensal = await buscarRelatorioMensal().catch(() => null);
                 const despesas = await buscarDespesas().catch(() => []);
 
                 setDiario(dadosDiario);
@@ -53,8 +52,7 @@ export default function PainelPage() {
                 const totalDespesas = despesas ? despesas.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0) : 0;
                 
                 // O lucro real (Saldo Líquido) é o Faturamento Mensal subtraído das Despesas Totais
-                // Se o backend retornar 0 no mensal, fazemos o fallback temporário para o diário para não zerar
-                const faturamentoMensal = dadosValorFinalMensal || dadosDiario?.faturamento || 0;
+                const faturamentoMensal = dadosRelatorioMensal?.faturamento || dadosDiario?.faturamento || 0;
                 const lucroLiquido = faturamentoMensal - totalDespesas;
 
                 setValorFinal({ faturamento: faturamentoMensal, despesas: totalDespesas, resultado: lucroLiquido });
