@@ -71,94 +71,60 @@ export default function LoginPage() {
 
     return (
         <AuthTemplate>
-
-            <div className="w-full flex-1 flex items-center justify-center px-4 py-8">
-
-               <div className="w-full max-w-md mx-auto px-5 py-10">
-
-
-                    <div className="text-center mb-8">
-
-                        <h2 className="text-xl sm:text-2xl font-bold text-[#1A5F7A]">
-                            Faça Login com sua Conta
+            <div className="w-full flex-1 flex items-center justify-center px-4 py-8 bg-gray-50/50">
+               <div className="w-full max-w-md mx-auto px-8 py-10 bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 transform transition-all">
+                    <div className="text-center mb-10">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[#1A5F7A] to-[#2B7A9F] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/20">
+                            <span className="text-2xl text-white font-black">✂️</span>
+                        </div>
+                        <h2 className="text-2xl font-black text-[#1A5F7A] tracking-tight">
+                            Bem-vindo de volta!
                         </h2>
-
-                        <p className="text-sm text-gray-500 mt-2">
-                            Entre para acessar o sistema
+                        <p className="text-sm text-gray-400 mt-2 font-medium">
+                            Entre com suas credenciais para acessar o sistema
                         </p>
-
                     </div>
-                    <form
-                        onSubmit={handleSubmit}
-                        className="w-full space-y-5"
-                    >
-                        <div className="w-full">
 
-                            <label
-                                htmlFor="login"
-                                className="block text-sm font-medium text-gray-700 mb-2"
-                            >
+                    <form onSubmit={handleSubmit} className="w-full space-y-6">
+                        <div className="w-full">
+                            <label htmlFor="login" className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
                                 Login
                             </label>
-
                             <InputText
                                 id="login"
                                 name="login"
                                 value={values.login}
                                 onChange={handleChange}
-                                placeholder="Digite seu login"
+                                placeholder="Seu login de acesso"
                             />
-
                             <FieldError error={errors.login} />
-
                         </div>
 
                         <div className="w-full">
-
-                            <label
-                                htmlFor="senha"
-                                className="block text-sm font-medium text-gray-700 mb-2"
-                            >
+                            <label htmlFor="senha" className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
                                 Senha
                             </label>
-
                             <InputText
                                 id="senha"
                                 name="senha"
                                 type="password"
                                 value={values.senha}
                                 onChange={handleChange}
-                                placeholder="Digite sua senha"
+                                placeholder="Sua senha secreta"
                             />
-
                             <FieldError error={errors.senha} />
-
                         </div>
-                        <div className="pt-2">
 
+                        <div className="pt-4">
                             <Button
                                 type="submit"
-                                label="Entrar"
-                                style="
-                                    w-full
-                                    bg-[#C05C32]
-                                    hover:bg-[#A84A24]
-                                    text-white
-                                    py-3
-                                    rounded-lg
-                                    font-semibold
-                                    transition-colors
-                                "
+                                label="Entrar no Sistema"
+                                style="w-full bg-[#50C4B5] hover:bg-[#43B3A5] text-white py-4 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#50C4B5]/30"
                             />
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
-
         </AuthTemplate>
     );
 }
