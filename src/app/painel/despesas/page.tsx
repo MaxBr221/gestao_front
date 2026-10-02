@@ -29,11 +29,9 @@ export default function DespesasPage() {
             };
 
             if (periodo === "SEMANA") {
-                const diaSemana = hoje.getDay();
                 const primeiroDia = new Date(hoje);
-                primeiroDia.setDate(hoje.getDate() - diaSemana);
+                primeiroDia.setDate(hoje.getDate() - 6);
                 const ultimoDia = new Date(hoje);
-                ultimoDia.setDate(hoje.getDate() - diaSemana + 6);
                 inicio = formatLocal(primeiroDia);
                 fim = formatLocal(ultimoDia);
             } else if (periodo === "MES") {
