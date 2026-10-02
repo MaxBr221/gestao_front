@@ -23,21 +23,29 @@ export default function DespesasPage() {
             let fim = "";
             
             const hoje = new Date();
+            const formatLocal = (d: Date) => {
+                const pad = (n: number) => n.toString().padStart(2, '0');
+                return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+            };
+
             if (periodo === "SEMANA") {
-                const primeiroDia = new Date(hoje.setDate(hoje.getDate() - hoje.getDay()));
-                const ultimoDia = new Date(hoje.setDate(hoje.getDate() - hoje.getDay() + 6));
-                inicio = primeiroDia.toISOString().split('T')[0];
-                fim = ultimoDia.toISOString().split('T')[0];
+                const diaSemana = hoje.getDay();
+                const primeiroDia = new Date(hoje);
+                primeiroDia.setDate(hoje.getDate() - diaSemana);
+                const ultimoDia = new Date(hoje);
+                ultimoDia.setDate(hoje.getDate() - diaSemana + 6);
+                inicio = formatLocal(primeiroDia);
+                fim = formatLocal(ultimoDia);
             } else if (periodo === "MES") {
                 const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
                 const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
-                inicio = primeiroDia.toISOString().split('T')[0];
-                fim = ultimoDia.toISOString().split('T')[0];
+                inicio = formatLocal(primeiroDia);
+                fim = formatLocal(ultimoDia);
             } else if (periodo === "ANO") {
                 const primeiroDia = new Date(hoje.getFullYear(), 0, 1);
                 const ultimoDia = new Date(hoje.getFullYear(), 11, 31);
-                inicio = primeiroDia.toISOString().split('T')[0];
-                fim = ultimoDia.toISOString().split('T')[0];
+                inicio = formatLocal(primeiroDia);
+                fim = formatLocal(ultimoDia);
             } else if (periodo === "PERSONALIZADO") {
                 inicio = dataInicial;
                 fim = dataFinal;
