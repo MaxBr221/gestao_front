@@ -107,9 +107,9 @@ export default function DespesasPage() {
                     </Link>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-                    <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-                        <div className="flex gap-2 bg-gray-100 p-1 rounded-xl w-full md:w-auto overflow-x-auto no-scrollbar whitespace-nowrap">
+                <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6 mb-6 max-w-full overflow-hidden">
+                    <div className="flex flex-col md:flex-row gap-4 justify-between items-center w-full min-w-0">
+                        <div className="flex gap-2 bg-gray-100 p-1 rounded-xl w-full md:w-auto overflow-x-auto no-scrollbar whitespace-nowrap max-w-full">
                             {['SEMANA', 'MES', 'ANO', 'PERSONALIZADO'].map(p => (
                                 <button 
                                     key={p} 
