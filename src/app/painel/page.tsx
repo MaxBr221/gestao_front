@@ -88,69 +88,54 @@ export default function PainelPage() {
                     </Link>
                 </div>
 
-                {/* Seção 1: Resumo de Hoje */}
-                <div className="mb-8">
-                    <h2 className="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
-                        <span>☀️</span> Resumo de Hoje
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-gradient-to-br from-[#1A5F7A] to-[#227B9E] text-white rounded-2xl shadow-lg p-5 transform transition-all hover:-translate-y-1">
-                            <p className="text-white/80 font-semibold uppercase tracking-wider text-xs">Faturamento Hoje</p>
-                            <h2 className="text-3xl font-black mt-1">
-                                R$ {diario?.faturamento ?? "0,00"}
-                            </h2>
+                {/* Métricas Principais Consolidadas */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    
+                    {/* Card 1: Faturamento Global */}
+                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">💰</span>
                         </div>
-
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex flex-col justify-center">
-                            <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Atendimentos Hoje</p>
-                            <h2 className="text-3xl font-black text-[#1A5F7A] mt-1">
-                                {diario?.quantAtendimentos ?? 0}
-                            </h2>
-                        </div>
-
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex flex-col justify-center">
-                            <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Mais realizado (Hoje)</p>
-                            <h2 className="text-2xl font-black text-[#50C4B5] mt-1 line-clamp-1">
-                                {diario?.servicoMaiorFrequencia ?? "Nenhum"}
-                            </h2>
+                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Faturamento Global</p>
+                        <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
+                            R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
+                        </h2>
+                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                            <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-red-100">
+                                📉 Despesas Totais: R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
+                            </span>
                         </div>
                     </div>
-                </div>
 
-                {/* Seção 2: Balanço Global */}
-                <div className="mb-8">
-                    <h2 className="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2">
-                        <span>🌎</span> Balanço Global
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Faturamento Global</p>
-                                <h2 className="text-2xl font-black text-gray-800 mt-1">
-                                    R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
-                                </h2>
-                            </div>
-                            <div className="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-xl">📈</div>
+                    {/* Card 2: Faturamento Hoje */}
+                    <div className="bg-gradient-to-br from-[#1A5F7A] to-[#2B7A9F] rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-5 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">☀️</span>
                         </div>
-
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Despesas Totais</p>
-                                <h2 className="text-2xl font-black text-[#e53e3e] mt-1">
-                                    R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
-                                </h2>
-                            </div>
-                            <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl">📉</div>
+                        <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Faturamento Hoje</p>
+                        <h2 className="text-4xl font-black text-white tracking-tight z-10">
+                            R$ {diario?.faturamento ?? "0,00"}
+                        </h2>
+                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
+                                ✂️ Atendimentos Hoje: {diario?.quantAtendimentos ?? 0}
+                            </span>
                         </div>
+                    </div>
 
-                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-5 flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 font-bold uppercase tracking-wider text-xs">Resultado Financeiro</p>
-                                <h2 className="text-2xl font-black text-[#50C4B5] mt-1">
-                                    R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
-                                </h2>
-                            </div>
-                            <div className="w-12 h-12 bg-blue-50 text-[#1A5F7A] rounded-full flex items-center justify-center text-xl">💰</div>
+                    {/* Card 3: Resultado Líquido */}
+                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">💎</span>
+                        </div>
+                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Resultado Líquido</p>
+                        <h2 className="text-4xl font-black text-[#50C4B5] tracking-tight z-10">
+                            R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
+                        </h2>
+                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                            <span className="bg-green-50 text-[#50C4B5] text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-green-100">
+                                🏆 Mais feito: <span className="text-gray-600 truncate max-w-[100px]">{diario?.servicoMaiorFrequencia || "Nenhum"}</span>
+                            </span>
                         </div>
                     </div>
                 </div>
