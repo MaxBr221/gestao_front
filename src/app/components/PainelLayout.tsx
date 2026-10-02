@@ -36,14 +36,14 @@ export const PainelLayout: React.FC<PainelLayoutProps> = ({ children }) => {
     }
 
     return (
-        <div className="flex min-h-screen w-full bg-[#FDFBF7]">
+        <div className="flex min-h-screen w-full bg-[#FDFBF7] max-w-[100vw] overflow-x-hidden">
 
             <Sidebar
                 aberta={sidebarAberta}
                 fechar={() => setSidebarAberta(false)}
             />
 
-            <div className="flex min-w-0 flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col w-full max-w-[100vw] overflow-x-hidden">
 
                 <header className="flex items-center border-b bg-white px-4 py-3 md:hidden">
 
