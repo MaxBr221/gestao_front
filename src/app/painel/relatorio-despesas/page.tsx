@@ -63,7 +63,7 @@ export default function RelatorioDespesasPage() {
         if (despesasFiltradas.length === 0) return [];
         const mapa = agregacaoPorCategoria();
         return Object.entries(mapa).map(([cat, val]) => ({
-            name: categoriasLabel[cat as any] || cat,
+            name: categoriasLabel[cat as keyof typeof categoriasLabel] || cat,
             value: val
         })).sort((a, b) => b.value - a.value);
     };
@@ -98,7 +98,7 @@ export default function RelatorioDespesasPage() {
                     <div className="bg-white rounded-2xl shadow-md p-10 text-center text-gray-500">
                         Carregando relatório...
                     </div>
-                ) : relatorio ? (
+                ) : despesasFiltradas ? (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-1 space-y-6">
                             <div className="bg-white rounded-2xl shadow-md p-6">
@@ -125,7 +125,7 @@ export default function RelatorioDespesasPage() {
                                             .sort(([, a], [, b]) => b - a)
                                             .map(([cat, val]) => (
                                                 <div key={cat} className="flex justify-between items-center border-b pb-2 last:border-0 last:pb-0">
-                                                    <span className="text-gray-600 font-medium">{categoriasLabel[cat as any] || cat}</span>
+                                                    <span className="text-gray-600 font-medium">{categoriasLabel[cat as keyof typeof categoriasLabel] || cat}</span>
                                                     <span className="font-bold text-gray-800">R$ {val.toFixed(2)}</span>
                                                 </div>
                                             ))
