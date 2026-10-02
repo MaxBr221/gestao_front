@@ -51,7 +51,12 @@ export default function PainelPage() {
                 setSemanal(dadosSemanal);
                 setServico(servicosHoje);
                 const totalDespesas = despesas ? despesas.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0) : 0;
-                setValorFinal({ faturamento: dadosValorFinalMensal, despesas: totalDespesas, resultado: dadosValorFinalMensal });
+                
+                // O lucro real (Saldo Líquido) é o Faturamento Mensal subtraído das Despesas Totais
+                const faturamentoMensal = dadosValorFinalMensal || 0;
+                const lucroLiquido = faturamentoMensal - totalDespesas;
+
+                setValorFinal({ faturamento: faturamentoMensal, despesas: totalDespesas, resultado: lucroLiquido });
 
                 // Pegar as 3 últimas despesas
                 if (despesas && despesas.length > 0) {
@@ -124,12 +129,12 @@ export default function PainelPage() {
                         </div>
                     </div>
 
-                    {/* Card 3: Saldo Líquido */}
+                    {/* Card 3: Lucro Líquido */}
                     <div className="bg-gradient-to-br from-[#50C4B5] to-[#43B3A5] rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white">
                         <div className="absolute -top-4 -right-4 p-4 opacity-5 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
                             <span className="text-9xl">💎</span>
                         </div>
-                        <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Saldo Líquido (Mês)</p>
+                        <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Lucro Líquido (Mês)</p>
                         <h2 className="text-4xl font-black text-white tracking-tight z-10">
                             R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
                         </h2>
