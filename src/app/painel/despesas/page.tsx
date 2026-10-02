@@ -109,12 +109,12 @@ export default function DespesasPage() {
 
                 <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
                     <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-                        <div className="flex gap-2 bg-gray-100 p-1 rounded-xl w-full md:w-auto">
+                        <div className="flex gap-2 bg-gray-100 p-1 rounded-xl w-full md:w-auto overflow-x-auto no-scrollbar whitespace-nowrap">
                             {['SEMANA', 'MES', 'ANO', 'PERSONALIZADO'].map(p => (
                                 <button 
                                     key={p} 
                                     onClick={() => setPeriodo(p as any)}
-                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition ${periodo === p ? 'bg-white text-[#1A5F7A] shadow' : 'text-gray-500 hover:text-gray-700'}`}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition flex-shrink-0 ${periodo === p ? 'bg-white text-[#1A5F7A] shadow' : 'text-gray-500 hover:text-gray-700'}`}
                                 >
                                     {p === 'SEMANA' ? 'Semana' : p === 'MES' ? 'Mês' : p === 'ANO' ? 'Ano' : 'Personalizado'}
                                 </button>
