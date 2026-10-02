@@ -154,7 +154,6 @@ export default function DespesasPage() {
                     ) : despesas.length === 0 ? (
                         <div className="p-10 text-center text-gray-500">Nenhuma despesa encontrada neste período.</div>
                     ) : (
-                    ) : (
                         <div className="w-full">
                             {/* Visualização Mobile (Cards) */}
                             <div className="block md:hidden divide-y divide-gray-100">
