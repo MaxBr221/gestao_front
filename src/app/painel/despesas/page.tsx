@@ -122,10 +122,20 @@ export default function DespesasPage() {
                         </div>
                         
                         {periodo === 'PERSONALIZADO' && (
-                            <div className="flex gap-2 items-center">
-                                <input type="date" value={dataInicial} onChange={e => setDataInicial(e.target.value)} className="border rounded-xl p-2 text-sm outline-none focus:border-[#50C4B5]" />
-                                <span className="text-gray-400">até</span>
-                                <input type="date" value={dataFinal} onChange={e => setDataFinal(e.target.value)} className="border rounded-xl p-2 text-sm outline-none focus:border-[#50C4B5]" />
+                            <div className="flex flex-col sm:flex-row gap-3 items-center bg-gray-50 p-2 rounded-2xl border border-gray-100">
+                                <input 
+                                    type="date" 
+                                    value={dataInicial} 
+                                    onChange={e => setDataInicial(e.target.value)} 
+                                    className="border border-gray-200 bg-white text-gray-700 rounded-xl px-4 py-2 text-sm outline-none focus:ring-4 focus:ring-[#50C4B5]/20 focus:border-[#50C4B5] transition-all w-full sm:w-auto font-medium" 
+                                />
+                                <span className="text-gray-400 text-sm font-bold uppercase">até</span>
+                                <input 
+                                    type="date" 
+                                    value={dataFinal} 
+                                    onChange={e => setDataFinal(e.target.value)} 
+                                    className="border border-gray-200 bg-white text-gray-700 rounded-xl px-4 py-2 text-sm outline-none focus:ring-4 focus:ring-[#50C4B5]/20 focus:border-[#50C4B5] transition-all w-full sm:w-auto font-medium" 
+                                />
                             </div>
                         )}
                     </div>
