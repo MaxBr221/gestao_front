@@ -153,7 +153,7 @@ export default function RelatorioDespesasPage() {
                                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => `R$ ${value.toFixed(2)}`} />
+                                            <Tooltip formatter={(value: any) => `R$ ${Number(value).toFixed(2)}`} />
                                             <Legend verticalAlign="bottom" height={36}/>
                                         </PieChart>
                                     </ResponsiveContainer>
