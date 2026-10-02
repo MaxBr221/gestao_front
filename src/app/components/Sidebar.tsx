@@ -29,6 +29,11 @@ const menuPrincipal: MenuItem[] = [
         label: "Serviços",
         href: "/painel/servico",
         icon: "✂"
+    },
+    {
+        label: "Despesas",
+        href: "/painel/despesas",
+        icon: "💸"
     }
 ];
 
@@ -47,6 +52,11 @@ const menuRelatorios: MenuItem[] = [
         label: "Relatório Anual",
         href: "/painel/relatorios/anual",
         icon: "📈"
+    },
+    {
+        label: "Relatório Despesas",
+        href: "/painel/relatorio-despesas",
+        icon: "📉"
     },
     {
         label: "Sair",
