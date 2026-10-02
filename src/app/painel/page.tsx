@@ -123,18 +123,18 @@ export default function PainelPage() {
                         </div>
                     </div>
 
-                    {/* Card 3: Resultado Líquido */}
+                    {/* Card 3: Serviço Mais Realizado */}
                     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
                         <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
-                            <span className="text-9xl">💎</span>
+                            <span className="text-9xl">🏆</span>
                         </div>
-                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Resultado Líquido</p>
-                        <h2 className="text-4xl font-black text-[#50C4B5] tracking-tight z-10">
-                            R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
+                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Mais realizado (Hoje)</p>
+                        <h2 className="text-3xl font-black text-[#50C4B5] tracking-tight z-10 mt-1 leading-tight line-clamp-2">
+                            {diario?.servicoMaiorFrequencia || "Nenhum"}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
-                            <span className="bg-green-50 text-[#50C4B5] text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-green-100">
-                                🏆 Mais feito: <span className="text-gray-600 truncate max-w-[100px]">{diario?.servicoMaiorFrequencia || "Nenhum"}</span>
+                            <span className="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-blue-100">
+                                ✂️ Top Serviço
                             </span>
                         </div>
                     </div>
