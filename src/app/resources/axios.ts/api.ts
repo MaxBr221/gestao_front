@@ -36,3 +36,24 @@ api.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+// Interceptor de Resposta: Limpa o cache sempre que fizermos um POST, PUT ou DELETE
+api.interceptors.response.use(
+  async (response) => {
+    const method = response.config.method?.toLowerCase();
+    // Se for uma requisição que altera dados, apagamos todo o cache em memória
+    if (method && method !== 'get') {
+      try {
+        if (api.storage && api.storage.clear) {
+          await api.storage.clear();
+        }
+      } catch (e) {
+        console.error("Erro ao limpar cache", e);
+      }
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
