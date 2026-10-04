@@ -250,49 +250,56 @@ export default function PainelPage() {
                                         <p className="text-gray-400 text-sm mt-1">Quantidade por tipo de serviço</p>
                                     </div>
 
-                                    <div className="w-full flex flex-col items-center">
-                                        <div className="w-full h-[220px] relative">
-                                            {/* Ícone Central - Z-index baixo para ficar atrás do Tooltip */}
-                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0">
-                                                <span className="text-3xl opacity-80">🎯</span>
-                                            </div>
-                                            
-                                            <div className="w-full h-full relative z-10">
-                                                <ResponsiveContainer width="100%" height="100%">
-                                                    <PieChart>
-                                                        <Pie
-                                                            data={servico}
-                                                            cx="50%"
-                                                            cy="50%"
-                                                            innerRadius={65}
-                                                            outerRadius={95}
-                                                            paddingAngle={5}
-                                                            dataKey="quantidade"
-                                                            nameKey="nome"
-                                                            stroke="none"
-                                                        >
-                                                            {servico.map((entry, index) => (
-                                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                                            ))}
-                                                        </Pie>
-                                                        <Tooltip 
-                                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
-                                                            formatter={(value, name) => [`${value} atendimentos`, name]} 
-                                                        />
-                                                    </PieChart>
-                                                </ResponsiveContainer>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 pb-2">
-                                            {servico.map((entry, index) => (
-                                                <div key={index} className="flex items-center gap-1.5 text-xs text-gray-600 font-medium">
-                                                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></span>
-                                                    {entry.nome.split(' ')[0]}
+                                    {servico.length > 0 ? (
+                                        <div className="w-full flex flex-col items-center">
+                                            <div className="w-full h-[220px] relative">
+                                                {/* Ícone Central - Z-index baixo para ficar atrás do Tooltip */}
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0">
+                                                    <span className="text-3xl opacity-80">🎯</span>
                                                 </div>
-                                            ))}
+                                                
+                                                <div className="w-full h-full relative z-10">
+                                                    <ResponsiveContainer width="100%" height="100%">
+                                                        <PieChart>
+                                                            <Pie
+                                                                data={servico}
+                                                                cx="50%"
+                                                                cy="50%"
+                                                                innerRadius={65}
+                                                                outerRadius={95}
+                                                                paddingAngle={5}
+                                                                dataKey="quantidade"
+                                                                nameKey="nome"
+                                                                stroke="none"
+                                                            >
+                                                                {servico.map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                                ))}
+                                                            </Pie>
+                                                            <Tooltip 
+                                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
+                                                                formatter={(value, name) => [`${value} atendimentos`, name]} 
+                                                            />
+                                                        </PieChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 pb-2">
+                                                {servico.map((entry, index) => (
+                                                    <div key={index} className="flex items-center gap-1.5 text-xs text-gray-600 font-medium">
+                                                        <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></span>
+                                                        {entry.nome.split(' ')[0]}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="text-center py-8">
+                                            <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">✂️</div>
+                                            <p className="text-gray-400 text-sm font-medium">Nenhum serviço realizado até o momento.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
