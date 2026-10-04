@@ -46,15 +46,10 @@ export default function AtendimentoPage(){
         (soma, servico) => soma + Number(servico.preco),
         0
     );
-   async function cadastroAtendimento() {
+    const [modalConfirmacao, setModalConfirmacao] = useState(false);
 
-        if (servicosSelecionados.length === 0) {
-            notification().notify("Selecione pelo menos um serviço.", "info");
-            return;
-        }
-
+    async function cadastroAtendimento() {
         try {
-
             const dados: AtendimentoRequest = {
                 formaPagamento: "PIX",
                 observacao: "",
@@ -68,10 +63,23 @@ export default function AtendimentoPage(){
                 "Atendimento cadastrado com sucesso!",
                 "success"
             );
+            
+            // Limpa o carrinho e fecha o modal
+            setServicosSelecionados([]);
+            setModalConfirmacao(false);
 
         } catch (error) {
             notification().notify("Não foi possível cadastrar o atendimento.", "error");
+            setModalConfirmacao(false);
         }
+    }
+
+    function handleAbrirConfirmacao() {
+        if (servicosSelecionados.length === 0) {
+            notification().notify("Selecione pelo menos um serviço.", "info");
+            return;
+        }
+        setModalConfirmacao(true);
     }
 
 
@@ -209,8 +217,7 @@ export default function AtendimentoPage(){
                             className="w-full mt-6 bg-[#50C4B5] text-white
                             font-bold py-4 rounded-xl hover:bg-[#43B3A5]
                             transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg text-lg"
-                            onClick={cadastroAtendimento}
-                            
+                            onClick={handleAbrirConfirmacao}
                         >
                             Confirmar Atendimento
                         </button>
@@ -218,6 +225,37 @@ export default function AtendimentoPage(){
                     </div>
 
                 </div>
+
+                {/* Modal de Confirmação */}
+                {modalConfirmacao && (
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="p-6 text-center">
+                                <div className="w-16 h-16 bg-[#50C4B5]/20 text-[#50C4B5] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                                    💰
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">Confirmar Atendimento?</h3>
+                                <p className="text-gray-500 text-sm mb-4">
+                                    Deseja realmente registrar este atendimento no valor total de <strong className="text-[#1A5F7A]">R$ {total.toFixed(2)}</strong>?
+                                </p>
+                            </div>
+                            <div className="bg-gray-50 p-4 flex gap-3 justify-center">
+                                <button 
+                                    onClick={() => setModalConfirmacao(false)}
+                                    className="px-5 py-2.5 rounded-xl font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 transition-colors w-full"
+                                >
+                                    Revisar
+                                </button>
+                                <button 
+                                    onClick={cadastroAtendimento}
+                                    className="px-5 py-2.5 rounded-xl font-bold text-white bg-[#50C4B5] hover:bg-[#43B3A5] transition-colors w-full shadow-sm"
+                                >
+                                    Confirmar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
             </div>
         </PainelLayout>
