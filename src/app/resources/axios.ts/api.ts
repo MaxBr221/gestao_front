@@ -11,6 +11,7 @@ const instanciaAxios = axios.create({
 // Adiciona cache automático para requisições GET (5 minutos)
 export const api = setupCache(instanciaAxios, {
   ttl: 1000 * 60 * 5, // 5 minutos de cache em memória
+  cacheTakeover: false, // Desativa a injeção de headers de cache que geram conflito de CORS no backend
 });
 
 api.interceptors.request.use((config) => {
