@@ -1,10 +1,16 @@
 import axios from "axios";
+import { setupCache } from 'axios-cache-interceptor';
 
-export const api = axios.create({
+const instanciaAxios = axios.create({
   baseURL:  process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   }
+});
+
+// Adiciona cache automático para requisições GET (5 minutos)
+export const api = setupCache(instanciaAxios, {
+  ttl: 1000 * 60 * 5, // 5 minutos de cache em memória
 });
 
 api.interceptors.request.use((config) => {
