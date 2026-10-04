@@ -12,6 +12,7 @@ const instanciaAxios = axios.create({
 export const api = setupCache(instanciaAxios, {
   ttl: 1000 * 60 * 5, // 5 minutos de cache em memória
   cacheTakeover: false, // Desativa a injeção de headers de cache que geram conflito de CORS no backend
+  headerInterpreter: () => 1000 * 60 * 5, // Força o cache ignorando se o servidor mandar "no-cache"
 });
 
 api.interceptors.request.use((config) => {
