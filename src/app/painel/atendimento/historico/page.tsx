@@ -61,8 +61,9 @@ export default function HistoricoAtendimentosPage() {
                         </p>
                     </div>
                 ) : (
-                    <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-50">
-                        <div className="overflow-x-auto">
+                    <div className="bg-white rounded-2xl shadow-md border border-gray-50 overflow-hidden">
+                        {/* Versão Desktop (Tabela) */}
+                        <div className="hidden md:block overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-[#f8fcfb] border-b border-gray-100">
@@ -78,7 +79,7 @@ export default function HistoricoAtendimentosPage() {
                                         <tr key={atendimento.id} className="bg-white hover:bg-[#50C4B5]/5 transition-all duration-200 group">
                                             <td className="py-5 px-6">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="hidden sm:flex w-10 h-10 rounded-xl bg-[#1A5F7A]/5 items-center justify-center text-[#1A5F7A] group-hover:bg-[#50C4B5]/10 group-hover:text-[#50C4B5] transition-colors">
+                                                    <div className="w-10 h-10 rounded-xl bg-[#1A5F7A]/5 flex items-center justify-center text-[#1A5F7A] group-hover:bg-[#50C4B5]/10 group-hover:text-[#50C4B5] transition-colors">
                                                         📅
                                                     </div>
                                                     <div>
@@ -115,6 +116,52 @@ export default function HistoricoAtendimentosPage() {
                                     )})}
                                 </tbody>
                             </table>
+                        </div>
+
+                        {/* Versão Mobile (Cards) */}
+                        <div className="md:hidden flex flex-col divide-y divide-gray-100">
+                            {atendimentos.map((atendimento) => {
+                                const [data, hora] = formatarData(atendimento.dataServico).split(", ");
+                                return (
+                                    <div key={atendimento.id} className="p-5 flex flex-col gap-5 bg-white hover:bg-[#50C4B5]/5 transition-colors">
+                                        <div className="flex justify-between items-start">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-[#1A5F7A]/5 flex items-center justify-center text-[#1A5F7A]">
+                                                    📅
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-gray-800 text-sm">{data}</div>
+                                                    {hora && <div className="text-xs font-medium text-gray-500 mt-0.5">às {hora}</div>}
+                                                </div>
+                                            </div>
+                                            <div className="inline-flex items-center px-3 py-1.5 bg-[#50C4B5]/10 rounded-lg border border-[#50C4B5]/20 shrink-0">
+                                                <span className="text-[#50C4B5] font-black text-sm">
+                                                    R$ {Number(atendimento.valor || 0).toFixed(2)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <p className="text-[10px] font-bold text-[#1A5F7A] uppercase tracking-widest mb-2">Serviços Realizados</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {atendimento.atendimentos && atendimento.atendimentos.length > 0
+                                                    ? atendimento.atendimentos.map((item, idx) => (
+                                                        <span key={item.id || idx} className="px-3 py-1 bg-gray-50 text-gray-600 text-xs font-semibold rounded-lg border border-gray-200/60 shadow-sm">
+                                                            {item.servico?.nome || "Serviço"}
+                                                        </span>
+                                                    ))
+                                                    : <span className="text-gray-400 italic text-sm">Não especificado</span>
+                                                }
+                                            </div>
+                                            {atendimento.observacao && (
+                                                <div className="text-xs text-gray-400 mt-2 flex items-center gap-1.5">
+                                                    <span className="text-gray-300 font-bold">↳</span> {atendimento.observacao}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                 )}
