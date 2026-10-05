@@ -65,52 +65,54 @@ export default function HistoricoAtendimentosPage() {
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-gray-50/80 border-b border-gray-100">
-                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-sm uppercase tracking-wider">Data</th>
-                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-sm uppercase tracking-wider">Serviços Realizados</th>
-                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-sm uppercase tracking-wider">Forma de Pagamento</th>
-                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-sm uppercase tracking-wider text-right">Valor Total</th>
+                                    <tr className="bg-[#f8fcfb] border-b border-gray-100">
+                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest">Data do Atendimento</th>
+                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest">Serviços Realizados</th>
+                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest text-right">Valor Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {atendimentos.map((atendimento) => (
-                                        <tr key={atendimento.id} className="border-b border-gray-50 hover:bg-[#50C4B5]/5 transition-colors duration-200">
-                                            <td className="py-4 px-6">
-                                                <div className="font-semibold text-gray-800">{formatarData(atendimento.dataServico)}</div>
+                                <tbody className="divide-y divide-gray-100">
+                                    {atendimentos.map((atendimento) => {
+                                        const [data, hora] = formatarData(atendimento.dataServico).split(", ");
+                                        return (
+                                        <tr key={atendimento.id} className="bg-white hover:bg-[#50C4B5]/5 transition-all duration-200 group">
+                                            <td className="py-5 px-6">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="hidden sm:flex w-10 h-10 rounded-xl bg-[#1A5F7A]/5 items-center justify-center text-[#1A5F7A] group-hover:bg-[#50C4B5]/10 group-hover:text-[#50C4B5] transition-colors">
+                                                        📅
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-gray-800 text-sm">{data}</div>
+                                                        {hora && <div className="text-xs font-medium text-gray-500 mt-1">às {hora}</div>}
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td className="py-4 px-6">
-                                                <div className="text-sm font-medium text-gray-600 line-clamp-2">
+                                            <td className="py-5 px-6">
+                                                <div className="flex flex-wrap gap-2">
                                                     {atendimento.atendimentos && atendimento.atendimentos.length > 0
                                                         ? atendimento.atendimentos.map((item, idx) => (
-                                                            <span key={item.id || idx}>
+                                                            <span key={item.id || idx} className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-semibold rounded-lg border border-gray-200/60 shadow-sm">
                                                                 {item.servico?.nome || "Serviço"}
-                                                                {idx < atendimento.atendimentos.length - 1 ? " • " : ""}
                                                             </span>
                                                         ))
-                                                        : <span className="text-gray-400 italic">Não especificado</span>
+                                                        : <span className="text-gray-400 italic text-sm">Não especificado</span>
                                                     }
                                                 </div>
                                                 {atendimento.observacao && (
-                                                    <div className="text-xs text-gray-400 mt-1">
-                                                        Nota: {atendimento.observacao}
+                                                    <div className="text-xs text-gray-400 mt-2 flex items-center gap-1.5">
+                                                        <span className="text-gray-300 font-bold">↳</span> {atendimento.observacao}
                                                     </div>
                                                 )}
                                             </td>
-                                            <td className="py-4 px-6">
-                                                <span className={`px-3 py-1.5 text-xs font-bold rounded-full 
-                                                    ${atendimento.formaPagamento === 'PIX' ? 'bg-teal-100 text-teal-700' : 
-                                                      atendimento.formaPagamento === 'CARTAO' ? 'bg-blue-100 text-blue-700' : 
-                                                      'bg-green-100 text-green-700'}`}>
-                                                    {atendimento.formaPagamento}
-                                                </span>
-                                            </td>
-                                            <td className="py-4 px-6 text-right">
-                                                <span className="font-bold text-lg text-[#50C4B5]">
-                                                    R$ {Number(atendimento.valor || 0).toFixed(2)}
-                                                </span>
+                                            <td className="py-5 px-6 text-right">
+                                                <div className="inline-flex items-center justify-end px-3 py-1.5 bg-[#50C4B5]/10 rounded-xl border border-[#50C4B5]/20">
+                                                    <span className="text-[#50C4B5] font-black text-lg">
+                                                        R$ {Number(atendimento.valor || 0).toFixed(2)}
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))}
+                                    )})}
                                 </tbody>
                             </table>
                         </div>
