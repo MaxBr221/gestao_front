@@ -26,6 +26,11 @@ const menuPrincipal: MenuItem[] = [
         icon: "+"
     },
     {
+        label: "Histórico",
+        href: "/painel/atendimento/historico",
+        icon: "🗓"
+    },
+    {
         label: "Serviços",
         href: "/painel/servico",
         icon: "✂"
