@@ -47,8 +47,12 @@ export default function AtendimentoPage(){
         0
     );
     const [modalConfirmacao, setModalConfirmacao] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     async function cadastroAtendimento() {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        
         try {
             const dados: AtendimentoRequest = {
                 formaPagamento: "PIX",
@@ -71,6 +75,8 @@ export default function AtendimentoPage(){
         } catch (error) {
             notification().notify("Não foi possível cadastrar o atendimento.", "error");
             setModalConfirmacao(false);
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -248,9 +254,12 @@ export default function AtendimentoPage(){
                                 </button>
                                 <button 
                                     onClick={cadastroAtendimento}
-                                    className="px-5 py-2.5 rounded-xl font-bold text-white bg-[#50C4B5] hover:bg-[#43B3A5] transition-colors w-full shadow-sm"
+                                    disabled={isSubmitting}
+                                    className={`px-5 py-2.5 rounded-xl font-bold text-white transition-colors w-full shadow-sm ${
+                                        isSubmitting ? "bg-gray-400 cursor-not-allowed opacity-70" : "bg-[#50C4B5] hover:bg-[#43B3A5]"
+                                    }`}
                                 >
-                                    Confirmar
+                                    {isSubmitting ? "Confirmando..." : "Confirmar"}
                                 </button>
                             </div>
                         </div>
