@@ -7,6 +7,8 @@ import { notification } from "../../../components/notification/index";
 export default function HistoricoAtendimentosPage() {
     const [atendimentos, setAtendimentos] = useState<AtendimentoResponseDTO[]>([]);
     const [loading, setLoading] = useState(true);
+    const [atendimentoParaExcluir, setAtendimentoParaExcluir] = useState<number | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         async function carregarAtendimentos() {
@@ -25,15 +27,22 @@ export default function HistoricoAtendimentosPage() {
         carregarAtendimentos();
     }, []);
 
-    async function handleExcluir(id: number) {
-        if (window.confirm("Deseja realmente excluir este atendimento? Esta ação não pode ser desfeita.")) {
-            try {
-                await deletarAtendimento(id);
-                setAtendimentos(prev => prev.filter(a => a.id !== id));
-                notification().notify("Atendimento excluído com sucesso!", "success");
-            } catch (error) {
-                notification().notify("Erro ao excluir o atendimento.", "error");
-            }
+    function confirmarExclusao(id: number) {
+        setAtendimentoParaExcluir(id);
+    }
+
+    async function handleExcluir() {
+        if (!atendimentoParaExcluir) return;
+        setIsDeleting(true);
+        try {
+            await deletarAtendimento(atendimentoParaExcluir);
+            setAtendimentos(prev => prev.filter(a => a.id !== atendimentoParaExcluir));
+            notification().notify("Atendimento excluído com sucesso!", "success");
+            setAtendimentoParaExcluir(null);
+        } catch (error) {
+            notification().notify("Erro ao excluir o atendimento.", "error");
+        } finally {
+            setIsDeleting(false);
         }
     }
 
@@ -130,7 +139,7 @@ export default function HistoricoAtendimentosPage() {
                                             </td>
                                             <td className="py-5 px-6 text-center">
                                                 <button
-                                                    onClick={() => handleExcluir(atendimento.id)}
+                                                    onClick={() => confirmarExclusao(atendimento.id)}
                                                     className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
                                                     title="Excluir Atendimento"
                                                 >
@@ -166,7 +175,7 @@ export default function HistoricoAtendimentosPage() {
                                                     </span>
                                                 </div>
                                                 <button
-                                                    onClick={() => handleExcluir(atendimento.id)}
+                                                    onClick={() => confirmarExclusao(atendimento.id)}
                                                     className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded-lg transition-colors text-xs flex items-center gap-1 font-semibold"
                                                 >
                                                     🗑️ Excluir
@@ -198,6 +207,43 @@ export default function HistoricoAtendimentosPage() {
                         </div>
                     </div>
                 )}
+
+                {/* Modal de Confirmação de Exclusão */}
+                {atendimentoParaExcluir && (
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="p-6 text-center">
+                                <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                                    🗑️
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">Excluir Atendimento?</h3>
+                                <p className="text-gray-500 text-sm mb-4">
+                                    Tem certeza que deseja excluir este atendimento? <br/>
+                                    <strong className="text-red-500">Esta ação não pode ser desfeita.</strong>
+                                </p>
+                            </div>
+                            <div className="bg-gray-50 p-4 flex gap-3 justify-center">
+                                <button 
+                                    onClick={() => setAtendimentoParaExcluir(null)}
+                                    disabled={isDeleting}
+                                    className="px-5 py-2.5 rounded-xl font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 transition-colors w-full"
+                                >
+                                    Cancelar
+                                </button>
+                                <button 
+                                    onClick={handleExcluir}
+                                    disabled={isDeleting}
+                                    className={`px-5 py-2.5 rounded-xl font-bold text-white transition-colors w-full shadow-sm ${
+                                        isDeleting ? "bg-red-400 cursor-not-allowed opacity-70" : "bg-red-500 hover:bg-red-600"
+                                    }`}
+                                >
+                                    {isDeleting ? "Excluindo..." : "Excluir"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </PainelLayout>
     );
