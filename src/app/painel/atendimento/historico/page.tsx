@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from "react"
-import { AtendimentoResponseDTO, buscarAtendimentos } from "../../../resources/atendimento/atendimentoService"
+import { AtendimentoResponseDTO, buscarAtendimentos, deletarAtendimento } from "../../../resources/atendimento/atendimentoService"
 import { PainelLayout } from "../../../components/PainelLayout";
 import { notification } from "../../../components/notification/index";
 
@@ -12,7 +12,10 @@ export default function HistoricoAtendimentosPage() {
         async function carregarAtendimentos() {
             try {
                 const dados = await buscarAtendimentos();
-                setAtendimentos(dados);
+                const dadosOrdenados = dados.sort((a, b) => 
+                    new Date(b.dataServico).getTime() - new Date(a.dataServico).getTime()
+                );
+                setAtendimentos(dadosOrdenados);
             } catch (error) {
                 notification().notify("Erro ao carregar histórico de atendimentos.", "error");
             } finally {
@@ -21,6 +24,18 @@ export default function HistoricoAtendimentosPage() {
         }
         carregarAtendimentos();
     }, []);
+
+    async function handleExcluir(id: number) {
+        if (window.confirm("Deseja realmente excluir este atendimento? Esta ação não pode ser desfeita.")) {
+            try {
+                await deletarAtendimento(id);
+                setAtendimentos(prev => prev.filter(a => a.id !== id));
+                notification().notify("Atendimento excluído com sucesso!", "success");
+            } catch (error) {
+                notification().notify("Erro ao excluir o atendimento.", "error");
+            }
+        }
+    }
 
     function formatarData(dataISO: string) {
         if (!dataISO) return "-";
@@ -70,6 +85,7 @@ export default function HistoricoAtendimentosPage() {
                                         <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest">Data do Atendimento</th>
                                         <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest">Serviços Realizados</th>
                                         <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest text-right">Valor Total</th>
+                                        <th className="py-5 px-6 font-bold text-[#1A5F7A] text-xs uppercase tracking-widest text-center">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
@@ -112,6 +128,15 @@ export default function HistoricoAtendimentosPage() {
                                                     </span>
                                                 </div>
                                             </td>
+                                            <td className="py-5 px-6 text-center">
+                                                <button
+                                                    onClick={() => handleExcluir(atendimento.id)}
+                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                                                    title="Excluir Atendimento"
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </td>
                                         </tr>
                                     )})}
                                 </tbody>
@@ -134,10 +159,18 @@ export default function HistoricoAtendimentosPage() {
                                                     {hora && <div className="text-xs font-medium text-gray-500 mt-0.5">às {hora}</div>}
                                                 </div>
                                             </div>
-                                            <div className="inline-flex items-center px-3 py-1.5 bg-[#50C4B5]/10 rounded-lg border border-[#50C4B5]/20 shrink-0">
-                                                <span className="text-[#50C4B5] font-black text-sm">
-                                                    R$ {Number(atendimento.valor || 0).toFixed(2)}
-                                                </span>
+                                            <div className="flex flex-col items-end gap-2 shrink-0">
+                                                <div className="inline-flex items-center px-3 py-1.5 bg-[#50C4B5]/10 rounded-lg border border-[#50C4B5]/20">
+                                                    <span className="text-[#50C4B5] font-black text-sm">
+                                                        R$ {Number(atendimento.valor || 0).toFixed(2)}
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    onClick={() => handleExcluir(atendimento.id)}
+                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1 rounded-lg transition-colors text-xs flex items-center gap-1 font-semibold"
+                                                >
+                                                    🗑️ Excluir
+                                                </button>
                                             </div>
                                         </div>
                                         

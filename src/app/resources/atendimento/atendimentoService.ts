@@ -30,3 +30,8 @@ export async function cadastrarAtendimento(dados: AtendimentoRequest){
     const response = await api.post("/atendimento", dados)
     return response.data;
 }
+
+export async function deletarAtendimento(id: number) {
+    const response = await api.delete(`/atendimento/${id}`);
+    return response.data;
+}
