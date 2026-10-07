@@ -64,8 +64,14 @@ export default function DespesasPage() {
                 });
             }
             
-            // Ordenar por data mais recente (decrescente)
-            filtradas.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
+            // Ordenar por data mais recente (decrescente) e por ID (para desempatar itens do mesmo dia)
+            filtradas.sort((a, b) => {
+                const dateDiff = new Date(b.data).getTime() - new Date(a.data).getTime();
+                if (dateDiff === 0) {
+                    return b.id - a.id;
+                }
+                return dateDiff;
+            });
             
             setDespesas(filtradas);
             setTotal(filtradas.reduce((acc, curr) => acc + curr.valor, 0));
