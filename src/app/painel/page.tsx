@@ -59,7 +59,13 @@ export default function PainelPage() {
 
                 // Pegar as 3 últimas despesas
                 if (despesas && despesas.length > 0) {
-                    const sorted = despesas.sort((a: any, b: any) => new Date(b.data).getTime() - new Date(a.data).getTime());
+                    const sorted = despesas.sort((a: any, b: any) => {
+                        const dateDiff = new Date(b.data).getTime() - new Date(a.data).getTime();
+                        if (dateDiff === 0) {
+                            return b.id - a.id;
+                        }
+                        return dateDiff;
+                    });
                     setUltimasDespesas(sorted.slice(0, 3));
                 }
             } catch (error) {
