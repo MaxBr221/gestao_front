@@ -14,6 +14,7 @@ export default function NovaDespesaPage() {
     const [valor, setValor] = useState("");
     const [data, setData] = useState("");
     const [categoria, setCategoria] = useState<CategoriaDespesa | "">("");
+    const [modalConfirmacao, setModalConfirmacao] = useState(false);
     
     // Obtém data de hoje no fuso local para bloquear datas futuras
     const getHojeStr = () => {
@@ -23,7 +24,7 @@ export default function NovaDespesaPage() {
     };
     const [observacao, setObservacao] = useState("");
 
-    const handleSalvar = async (e: React.FormEvent) => {
+    const handleAbrirConfirmacao = (e: React.FormEvent) => {
         e.preventDefault();
         
         if (!valor || !data || !categoria) {
@@ -31,6 +32,10 @@ export default function NovaDespesaPage() {
             return;
         }
 
+        setModalConfirmacao(true);
+    };
+
+    const handleSalvar = async () => {
         setLoading(true);
         try {
             // Se a descrição estiver vazia, usamos o nome da categoria como descrição padrão
@@ -46,9 +51,14 @@ export default function NovaDespesaPage() {
 
             await cadastrarDespesa(payload);
             notification().notify("Despesa cadastrada com sucesso!", "success");
-            router.push("/painel/despesas");
+            setModalConfirmacao(false);
+            
+            setTimeout(() => {
+                router.push("/painel/despesas");
+            }, 1000);
         } catch (error) {
             notification().notify("Não foi possível cadastrar a despesa.", "error");
+            setModalConfirmacao(false);
         } finally {
             setLoading(false);
         }
@@ -63,7 +73,7 @@ export default function NovaDespesaPage() {
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sm:p-8">
-                    <form onSubmit={handleSalvar} className="space-y-6">
+                    <form onSubmit={handleAbrirConfirmacao} className="space-y-6">
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -137,14 +147,49 @@ export default function NovaDespesaPage() {
                             </button>
                             <button 
                                 type="submit" 
-                                disabled={loading}
                                 className="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-white bg-[#50C4B5] hover:bg-[#43B3A5] shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:transform-none"
                             >
-                                {loading ? "Salvando..." : "Salvar despesa"}
+                                Salvar despesa
                             </button>
                         </div>
                     </form>
                 </div>
+                
+                {/* Modal de Confirmação */}
+                {modalConfirmacao && (
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                            <div className="p-6 text-center">
+                                <div className="w-16 h-16 bg-[#50C4B5]/20 text-[#50C4B5] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                                    💰
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">Confirmar Despesa?</h3>
+                                <p className="text-gray-500 text-sm mb-4">
+                                    Deseja realmente registrar esta despesa no valor de <strong className="text-[#1A5F7A]">R$ {Number(valor).toFixed(2)}</strong>?
+                                </p>
+                            </div>
+                            <div className="bg-gray-50 p-4 flex gap-3 justify-center">
+                                <button 
+                                    type="button"
+                                    onClick={() => setModalConfirmacao(false)}
+                                    className="px-5 py-2.5 rounded-xl font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-100 transition-colors w-full"
+                                >
+                                    Revisar
+                                </button>
+                                <button 
+                                    type="button"
+                                    onClick={handleSalvar}
+                                    disabled={loading}
+                                    className={`px-5 py-2.5 rounded-xl font-bold text-white transition-colors w-full shadow-sm ${
+                                        loading ? "bg-gray-400 cursor-not-allowed opacity-70" : "bg-[#50C4B5] hover:bg-[#43B3A5]"
+                                    }`}
+                                >
+                                    {loading ? "Salvando..." : "Confirmar"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </PainelLayout>
     );
