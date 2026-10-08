@@ -94,31 +94,20 @@ export default function PainelPage() {
                         </p>
                     </div>
 
-                    <Link href="/painel/despesas/nova" className="bg-[#50C4B5] text-white text-center font-bold py-3 px-6 rounded-xl hover:bg-[#43B3A5] shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto">
-                        + Nova Despesa
-                    </Link>
+                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <Link href="/painel/atendimento" className="bg-[#50C4B5] text-white text-center font-bold py-3 px-6 rounded-xl hover:bg-[#43B3A5] shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto">
+                            + Novo Atendimento
+                        </Link>
+                        <Link href="/painel/despesas/nova" className="bg-white text-[#1A5F7A] border-2 border-[#1A5F7A] text-center font-bold py-3 px-6 rounded-xl hover:bg-gray-50 shadow-sm hover:shadow transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto">
+                            + Nova Despesa
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Métricas Principais Consolidadas */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
 
-                    {/* Card 1: Faturamento Mensal */}
-                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
-                        <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
-                            <span className="text-9xl">💰</span>
-                        </div>
-                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Faturamento Mensal</p>
-                        <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
-                            R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
-                        </h2>
-                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
-                            <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-red-100">
-                                📉 Despesas Totais: R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Card 2: Faturamento Hoje */}
+                    {/* Card 1: Faturamento Hoje */}
                     <div className="bg-gradient-to-br from-[#1A5F7A] to-[#2B7A9F] rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white">
                         <div className="absolute -top-4 -right-4 p-4 opacity-5 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 pointer-events-none">
                             <span className="text-9xl">☀️</span>
@@ -128,27 +117,65 @@ export default function PainelPage() {
                             R$ {diario?.faturamento ?? "0,00"}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
-                            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
+                            <span className="bg-black/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
                                 ✂️ Atendimentos Hoje: {diario?.quantAtendimentos ?? 0}
                             </span>
                         </div>
                     </div>
 
-                    {/* Card 3: Lucro Líquido */}
-                    <div className="bg-gradient-to-br from-[#50C4B5] to-[#43B3A5] rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white">
-                        <div className="absolute -top-4 -right-4 p-4 opacity-5 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
-                            <span className="text-9xl">💎</span>
+                    {/* Card 2: Receita Mensal */}
+                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">💰</span>
                         </div>
-                        <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Lucro Líquido (Mês)</p>
-                        <h2 className="text-4xl font-black text-white tracking-tight z-10">
-                            R$ {valorFinal?.resultado?.toFixed(2) ?? "0.00"}
+                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Receitas (Mês)</p>
+                        <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
+                            R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
-                            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
-                                ✨ Valor Final
+                            <span className="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-blue-100">
+                                📈 Total faturado
                             </span>
                         </div>
                     </div>
+
+                    {/* Card 3: Despesas Mensais */}
+                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
+                        <div className="absolute -top-4 -right-4 p-4 opacity-[0.03] transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 pointer-events-none">
+                            <span className="text-9xl">📉</span>
+                        </div>
+                        <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Despesas (Mês)</p>
+                        <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
+                            R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
+                        </h2>
+                        <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                            <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-red-100">
+                                💸 Total de saídas
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Card 4: Lucro Líquido */}
+                    {(() => {
+                        const lucro = valorFinal?.resultado ?? 0;
+                        const isPositivo = lucro >= 0;
+                        return (
+                            <div className={`bg-gradient-to-br ${isPositivo ? 'from-[#50C4B5] to-[#43B3A5]' : 'from-red-500 to-red-600'} rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-shadow text-white`}>
+                                <div className="absolute -top-4 -right-4 p-4 opacity-10 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 pointer-events-none">
+                                    <span className="text-9xl">{isPositivo ? '💎' : '⚠️'}</span>
+                                </div>
+                                <p className="text-white/80 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Lucro Líquido (Mês)</p>
+                                <h2 className="text-4xl font-black text-white tracking-tight z-10">
+                                    R$ {lucro.toFixed(2)}
+                                </h2>
+                                <div className="mt-auto pt-6 flex items-center gap-2 z-10">
+                                    <span className="bg-black/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/20">
+                                        {isPositivo ? '✨ Resultado Positivo' : '⚠️ Atenção: Prejuízo'}
+                                    </span>
+                                </div>
+                            </div>
+                        );
+                    })()}
                 </div>
 
                 {/* Gráficos e Últimas Despesas */}
