@@ -1,23 +1,15 @@
 import axios from "axios";
-import { setupCache } from 'axios-cache-interceptor';
 
-const instanciaAxios = axios.create({
+export const api = axios.create({
   baseURL:  process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   }
 });
 
-// Adiciona cache automático para requisições GET (5 minutos)
-export const api = setupCache(instanciaAxios, {
-  ttl: 1000 * 60 * 5, // 5 minutos de cache em memória
-  cacheTakeover: false, // Desativa a injeção de headers de cache que geram conflito de CORS no backend
-  headerInterpreter: () => 1000 * 60 * 5, // Força o cache ignorando se o servidor mandar "no-cache"
-});
-
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
-    // 1. Busca a sessão esgtruturada que sua classe PropriAuth salvou
+    // 1. Busca a sessão estruturada que salvou
     const sessaoUser = localStorage.getItem("_auth");
     
     if (sessaoUser) {
@@ -36,24 +28,3 @@ api.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
-
-// Interceptor de Resposta: Limpa o cache sempre que fizermos um POST, PUT ou DELETE
-api.interceptors.response.use(
-  async (response) => {
-    const method = response.config.method?.toLowerCase();
-    // Se for uma requisição que altera dados, apagamos todo o cache em memória
-    if (method && method !== 'get') {
-      try {
-        if (api.storage && api.storage.clear) {
-          await api.storage.clear();
-        }
-      } catch (e) {
-        console.error("Erro ao limpar cache", e);
-      }
-    }
-    return response;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
