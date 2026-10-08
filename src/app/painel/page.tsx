@@ -14,6 +14,7 @@ export default function PainelPage() {
     const [servico, setServico] = useState<ServicosRealizado[]>([]);
     const [valorFinal, setValorFinal] = useState<any>(null);
     const [ultimasDespesas, setUltimasDespesas] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
 
     interface RelatorioSemanalResponse {
@@ -37,6 +38,7 @@ export default function PainelPage() {
 
     useEffect(() => {
         async function carregarRelatorio() {
+            setLoading(true);
             try {
                 const dadosDiario = await buscarRelatorioDiario();
                 const dadosSemanal = await buscarRelatorioSemanal();
@@ -70,6 +72,8 @@ export default function PainelPage() {
                 }
             } catch (error) {
                 console.error("Erro ao carregar relatórios do painel", error);
+            } finally {
+                setLoading(false);
             }
         }
         carregarRelatorio();
@@ -84,7 +88,41 @@ export default function PainelPage() {
     return (
         <PainelLayout>
             <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-                <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-8 sm:mb-10 gap-4">
+                {/* Esqueleto de Carregamento (Skeleton) */}
+                {loading ? (
+                    <div className="animate-pulse">
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-8 sm:mb-10 gap-4">
+                            <div>
+                                <div className="h-8 w-48 bg-gray-200 rounded mb-3"></div>
+                                <div className="h-4 w-64 bg-gray-100 rounded"></div>
+                            </div>
+                            <div className="flex gap-3">
+                                <div className="h-12 w-40 bg-gray-200 rounded-xl"></div>
+                                <div className="h-12 w-40 bg-gray-200 rounded-xl"></div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+                            {[1, 2, 3, 4].map(i => (
+                                <div key={i} className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex flex-col h-[160px]">
+                                    <div className="h-3 w-24 bg-gray-200 rounded mb-4"></div>
+                                    <div className="h-10 w-32 bg-gray-200 rounded mb-auto"></div>
+                                    <div className="h-6 w-3/4 bg-gray-100 rounded mt-6"></div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                            <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-[400px]"></div>
+                            <div className="lg:col-span-1 space-y-6">
+                                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-[180px]"></div>
+                                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-[196px]"></div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-8 sm:mb-10 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-[#1A5F7A]">
                             Painel de Gestão
@@ -331,6 +369,8 @@ export default function PainelPage() {
                         </div>
                     );
                 })()}
+                    </>
+                )}
             </div>
 
         </PainelLayout>
