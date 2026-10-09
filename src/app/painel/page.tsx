@@ -40,13 +40,21 @@ export default function PainelPage() {
         async function carregarRelatorio() {
             setLoading(true);
             try {
-                const dadosDiario = await buscarRelatorioDiario();
-                const dadosSemanal = await buscarRelatorioSemanal();
-                const servicosHoje = await servicosDeHoje();
-
-                // Novos endpoints
-                const dadosRelatorioMensal = await buscarRelatorioMensal().catch(() => null);
-                const despesas = await buscarDespesas().catch(() => []);
+                // Otimização: rodar todas as requisições em paralelo (Promise.all)
+                // Isso remove o efeito "cascata" e faz a tela carregar até 5x mais rápido
+                const [
+                    dadosDiario, 
+                    dadosSemanal, 
+                    servicosHoje, 
+                    dadosRelatorioMensal, 
+                    despesas
+                ] = await Promise.all([
+                    buscarRelatorioDiario(),
+                    buscarRelatorioSemanal(),
+                    servicosDeHoje(),
+                    buscarRelatorioMensal().catch(() => null),
+                    buscarDespesas().catch(() => [])
+                ]);
 
                 setDiario(dadosDiario);
                 setSemanal(dadosSemanal);
