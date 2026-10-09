@@ -101,11 +101,11 @@ export default function LoginPage() {
                 <div className="w-full max-w-md bg-white rounded-3xl shadow-[0_8px_40px_rgb(0,0,0,0.06)] border border-gray-100 p-8 sm:p-10 transform transition-all hover:shadow-[0_8px_50px_rgb(0,0,0,0.08)]">
                     
                     {/* Mobile Logo */}
-                    <div className="lg:hidden w-16 h-16 bg-gradient-to-br from-[#1A5F7A] to-[#2B7A9F] rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-blue-900/20">
+                    <div className="lg:hidden w-16 h-16 bg-gradient-to-br from-[#1A5F7A] to-[#2B7A9F] rounded-2xl flex items-center justify-center mb-8 mx-auto shadow-lg shadow-blue-900/20">
                         <span className="text-2xl text-white font-black">✂️</span>
                     </div>
 
-                    <div className="mb-10">
+                    <div className="mb-10 text-center lg:text-left">
                         <h2 className="text-3xl font-black text-gray-800 tracking-tight mb-2">
                             Bem-vindo de volta
                         </h2>
