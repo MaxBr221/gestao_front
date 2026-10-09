@@ -160,7 +160,7 @@ export default function PainelPage() {
                         </div>
                         <p className="text-white/70 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Faturamento Hoje</p>
                         <h2 className="text-4xl font-black text-white tracking-tight z-10">
-                            R$ {diario?.faturamento ?? "0,00"}
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(diario?.faturamento ?? 0)}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
                             <span className="bg-black/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/10">
@@ -176,7 +176,7 @@ export default function PainelPage() {
                         </div>
                         <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Receitas (Mês)</p>
                         <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
-                            R$ {valorFinal?.faturamento?.toFixed(2) ?? diario?.faturamento?.toFixed(2) ?? "0.00"}
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorFinal?.faturamento ?? diario?.faturamento ?? 0)}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
                             <span className="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-blue-100">
@@ -192,7 +192,7 @@ export default function PainelPage() {
                         </div>
                         <p className="text-gray-400 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Despesas (Mês)</p>
                         <h2 className="text-4xl font-black text-gray-800 tracking-tight z-10">
-                            R$ {valorFinal?.despesas?.toFixed(2) ?? "0.00"}
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorFinal?.despesas ?? 0)}
                         </h2>
                         <div className="mt-auto pt-6 flex items-center gap-2 z-10">
                             <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm border border-red-100">
@@ -212,7 +212,7 @@ export default function PainelPage() {
                                 </div>
                                 <p className="text-white/80 font-semibold uppercase tracking-widest text-[10px] mb-1 z-10">Lucro Líquido (Mês)</p>
                                 <h2 className="text-4xl font-black text-white tracking-tight z-10">
-                                    R$ {lucro.toFixed(2)}
+                                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(lucro)}
                                 </h2>
                                 <div className="mt-auto pt-6 flex items-center gap-2 z-10">
                                     <span className="bg-black/20 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm backdrop-blur-md border border-white/20">
@@ -239,50 +239,57 @@ export default function PainelPage() {
                                         <p className="text-gray-400 text-sm mt-1">Acompanhe a evolução diária das suas receitas</p>
                                     </div>
                                     <div className="w-full h-[280px]">
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <AreaChart
-                                                data={semanal}
-                                                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                                            >
-                                                <defs>
-                                                    <linearGradient id="colorFaturamento" x1="0" y1="0" x2="0" y2="1">
-                                                        <stop offset="5%" stopColor="#50C4B5" stopOpacity={0.4} />
-                                                        <stop offset="95%" stopColor="#50C4B5" stopOpacity={0} />
-                                                    </linearGradient>
-                                                </defs>
-                                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                                                <XAxis
-                                                    dataKey="dia"
-                                                    tickFormatter={(dia) => diasSemana[dia]}
-                                                    tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
-                                                    axisLine={false}
-                                                    tickLine={false}
-                                                    dy={10}
-                                                />
-                                                <YAxis
-                                                    domain={[0, "auto"]}
-                                                    allowDecimals={false}
-                                                    tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
-                                                    axisLine={false}
-                                                    tickLine={false}
-                                                />
-                                                <Tooltip
-                                                    cursor={{ stroke: '#50C4B5', strokeWidth: 1, strokeDasharray: '5 5' }}
-                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold', color: '#1f2937' }}
-                                                    formatter={(value) => [`R$ ${value}`, "Faturamento"]}
-                                                    labelFormatter={(dia) => diasSemana[dia as number] || dia}
-                                                />
-                                                <Area
-                                                    type="monotone"
-                                                    dataKey="faturamento"
-                                                    stroke="#50C4B5"
-                                                    strokeWidth={4}
-                                                    fillOpacity={1}
-                                                    fill="url(#colorFaturamento)"
-                                                    activeDot={{ r: 6, fill: '#1A5F7A', stroke: '#fff', strokeWidth: 2 }}
-                                                />
-                                            </AreaChart>
-                                        </ResponsiveContainer>
+                                        {semanal && semanal.length > 0 ? (
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <AreaChart
+                                                    data={semanal}
+                                                    margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                                                >
+                                                    <defs>
+                                                        <linearGradient id="colorFaturamento" x1="0" y1="0" x2="0" y2="1">
+                                                            <stop offset="5%" stopColor="#50C4B5" stopOpacity={0.4} />
+                                                            <stop offset="95%" stopColor="#50C4B5" stopOpacity={0} />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                                                    <XAxis
+                                                        dataKey="dia"
+                                                        tickFormatter={(dia) => diasSemana[dia]}
+                                                        tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
+                                                        axisLine={false}
+                                                        tickLine={false}
+                                                        dy={10}
+                                                    />
+                                                    <YAxis
+                                                        domain={[0, "auto"]}
+                                                        allowDecimals={false}
+                                                        tick={{ fontSize: 12, fill: "#9CA3AF", fontWeight: 500 }}
+                                                        axisLine={false}
+                                                        tickLine={false}
+                                                    />
+                                                    <Tooltip
+                                                        cursor={{ stroke: '#50C4B5', strokeWidth: 1, strokeDasharray: '5 5' }}
+                                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold', color: '#1f2937' }}
+                                                        formatter={(value) => [new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value as number), "Faturamento"]}
+                                                        labelFormatter={(dia) => diasSemana[dia as number] || dia}
+                                                    />
+                                                    <Area
+                                                        type="monotone"
+                                                        dataKey="faturamento"
+                                                        stroke="#50C4B5"
+                                                        strokeWidth={4}
+                                                        fillOpacity={1}
+                                                        fill="url(#colorFaturamento)"
+                                                        activeDot={{ r: 6, fill: '#1A5F7A', stroke: '#fff', strokeWidth: 2 }}
+                                                    />
+                                                </AreaChart>
+                                            </ResponsiveContainer>
+                                        ) : (
+                                            <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                                                <span className="text-4xl mb-3">📊</span>
+                                                <p className="font-medium text-sm">Nenhum faturamento registrado nesta semana.</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +312,7 @@ export default function PainelPage() {
                                                         <p className="text-xs text-gray-400 mt-0.5 font-medium">{formatarData(desp.data)}</p>
                                                     </div>
                                                     <span className="font-bold text-[#e53e3e] text-sm whitespace-nowrap bg-red-50 px-2 py-1 rounded-lg">
-                                                        - R$ {desp.valor.toFixed(2)}
+                                                        - {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(desp.valor)}
                                                     </span>
                                                 </div>
                                             ))}
@@ -331,36 +338,45 @@ export default function PainelPage() {
 
                                     <div className="w-full flex flex-col items-center">
                                         <div className="w-full h-[220px] relative">
-                                            {/* Ícone Central - Z-index baixo para ficar atrás do Tooltip */}
-                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0">
-                                                <span className="text-3xl opacity-80">🎯</span>
-                                            </div>
+                                            {servico && servico.length > 0 ? (
+                                                <>
+                                                    {/* Ícone Central - Z-index baixo para ficar atrás do Tooltip */}
+                                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0">
+                                                        <span className="text-3xl opacity-80">🎯</span>
+                                                    </div>
 
-                                            <div className="w-full h-full relative z-10">
-                                                <ResponsiveContainer width="100%" height="100%">
-                                                    <PieChart>
-                                                        <Pie
-                                                            data={servico}
-                                                            cx="50%"
-                                                            cy="50%"
-                                                            innerRadius={65}
-                                                            outerRadius={95}
-                                                            paddingAngle={5}
-                                                            dataKey="quantidade"
-                                                            nameKey="nome"
-                                                            stroke="none"
-                                                        >
-                                                            {servico.map((entry, index) => (
-                                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                                            ))}
-                                                        </Pie>
-                                                        <Tooltip
-                                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
-                                                            formatter={(value, name) => [`${value} atendimentos`, name]}
-                                                        />
-                                                    </PieChart>
-                                                </ResponsiveContainer>
-                                            </div>
+                                                    <div className="w-full h-full relative z-10">
+                                                        <ResponsiveContainer width="100%" height="100%">
+                                                            <PieChart>
+                                                                <Pie
+                                                                    data={servico}
+                                                                    cx="50%"
+                                                                    cy="50%"
+                                                                    innerRadius={65}
+                                                                    outerRadius={95}
+                                                                    paddingAngle={5}
+                                                                    dataKey="quantidade"
+                                                                    nameKey="nome"
+                                                                    stroke="none"
+                                                                >
+                                                                    {servico.map((entry, index) => (
+                                                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                                    ))}
+                                                                </Pie>
+                                                                <Tooltip
+                                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
+                                                                    formatter={(value, name) => [`${value} atendimentos`, name]}
+                                                                />
+                                                            </PieChart>
+                                                        </ResponsiveContainer>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 mt-2">
+                                                    <span className="text-3xl mb-2">✂️</span>
+                                                    <p className="font-medium text-xs text-center px-4">Nenhum serviço realizado hoje.</p>
+                                                </div>
+                                            )}
                                         </div>
 
                                         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 pb-2">
