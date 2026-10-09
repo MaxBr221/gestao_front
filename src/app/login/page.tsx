@@ -92,18 +92,7 @@ export default function LoginPage() {
                         O sistema definitivo para modernizar o controle da sua barbearia. Gerencie clientes, finanças e serviços em um só lugar.
                     </p>
                     
-                    <div className="flex items-center gap-4">
-                        <div className="flex -space-x-4">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className={`w-10 h-10 rounded-full border-2 border-[#1A5F7A] bg-gray-200 flex items-center justify-center overflow-hidden z-[${4-i}]`}>
-                                    <div className="w-full h-full bg-white/20"></div>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="text-sm font-medium text-blue-100/70">
-                            Junte-se a dezenas de barbearias
-                        </p>
-                    </div>
+
                 </div>
             </div>
 
@@ -156,10 +145,7 @@ export default function LoginPage() {
                             />
                             <div className="h-4 flex justify-between items-start">
                                 <FieldError error={errors.senha} />
-                                {/* Placeholder para um 'Esqueci a senha' futuro */}
-                                <span className="text-xs font-semibold text-[#50C4B5] hover:text-[#3dafa0] cursor-pointer transition-colors">
-                                    Esqueceu a senha?
-                                </span>
+
                             </div>
                         </div>
 
@@ -172,11 +158,7 @@ export default function LoginPage() {
                         </div>
                     </form>
                     
-                    <div className="mt-8 text-center">
-                        <p className="text-xs text-gray-400 font-medium">
-                            Problemas para acessar? <a href="#" className="text-[#1A5F7A] hover:underline font-bold">Fale com o suporte</a>
-                        </p>
-                    </div>
+
                 </div>
             </div>
         </div>
