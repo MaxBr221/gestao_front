@@ -136,9 +136,9 @@ export default function RelatorioDespesasPage() {
 
                         <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                             <h3 className="text-lg font-bold text-[#1A5F7A] mb-6">Distribuição de Despesas ({periodoStr})</h3>
-                            <div className="w-full h-[400px] flex items-center justify-center">
+                            <div className="w-full min-h-[500px] flex items-center justify-center pb-8">
                                 {prepararDadosGrafico().length > 0 ? (
-                                    <ResponsiveContainer width="100%" height="100%">
+                                    <ResponsiveContainer width="100%" height={500}>
                                         <PieChart>
                                             <Pie
                                                 data={prepararDadosGrafico()}
@@ -154,7 +154,7 @@ export default function RelatorioDespesasPage() {
                                                 ))}
                                             </Pie>
                                             <Tooltip formatter={(value: any) => `R$ ${Number(value).toFixed(2)}`} />
-                                            <Legend verticalAlign="bottom" height={36}/>
+                                            <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: "20px" }} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 ) : (
