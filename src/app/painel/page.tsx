@@ -59,17 +59,27 @@ export default function PainelPage() {
                 setDiario(dadosDiario);
                 setSemanal(dadosSemanal);
                 setServico(servicosHoje);
-                const totalDespesas = despesas ? despesas.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0) : 0;
 
-                // O lucro real (Saldo Líquido) é o Faturamento Mensal subtraído das Despesas Totais
-                const faturamentoMensal = dadosRelatorioMensal?.faturamento || dadosDiario?.faturamento || 0;
+                const hoje = new Date();
+                const pad = (n: number) => n.toString().padStart(2, '0');
+                const anoMesAtual = `${hoje.getFullYear()}-${pad(hoje.getMonth() + 1)}`;
+
+                const despesasDoMes = (despesas || []).filter((desp: any) => {
+                    const dataStr = desp?.data ? String(desp.data).split('T')[0] : '';
+                    return dataStr.startsWith(anoMesAtual);
+                });
+
+                const totalDespesas = despesasDoMes.reduce((acc: number, curr: any) => acc + (Number(curr.valor) || 0), 0);
+
+                // O lucro real (Saldo Líquido) é o Faturamento Mensal subtraído das Despesas do Mês
+                const faturamentoMensal = dadosRelatorioMensal?.faturamento ?? dadosDiario?.faturamento ?? 0;
                 const lucroLiquido = faturamentoMensal - totalDespesas;
 
                 setValorFinal({ faturamento: faturamentoMensal, despesas: totalDespesas, resultado: lucroLiquido });
 
                 // Pegar as 3 últimas despesas
                 if (despesas && despesas.length > 0) {
-                    const sorted = despesas.sort((a: any, b: any) => {
+                    const sorted = [...despesas].sort((a: any, b: any) => {
                         const dateDiff = new Date(b.data).getTime() - new Date(a.data).getTime();
                         if (dateDiff === 0) {
                             return b.id - a.id;
